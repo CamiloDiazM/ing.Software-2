@@ -1,7 +1,6 @@
-package Model.co.edu.poli.ejemplo1.model;
+package Model.co.edu.poli.ejemplo1.Model;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
 
 public class Pedido {
 

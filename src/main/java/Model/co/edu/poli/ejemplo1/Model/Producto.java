@@ -1,7 +1,4 @@
-package Model.co.edu.poli.ejemplo1.model;
-
-import java.io.*;
-import java.util.*;
+package Model.co.edu.poli.ejemplo1.Model;
 
 /**
  * 
