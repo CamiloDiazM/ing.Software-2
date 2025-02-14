@@ -1,7 +1,6 @@
 package Model.co.edu.poli.ejemplo1.View;
 
 import Model.co.edu.poli.ejemplo1.Controllers.ClienteController;
-import Model.co.edu.poli.ejemplo1.Model.Cliente;
 import java.util.Scanner;
 
 public class ClienteView {
@@ -12,45 +11,44 @@ public class ClienteView {
         this.clienteController = new ClienteController();
     }
 
-    public void registrarClienteDesdeConsola() {
+    public void mostrarMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del cliente: ");
-        String id = scanner.nextLine();
-        System.out.print("Ingrese el nombre del cliente: ");
-        String nombre = scanner.nextLine();
-        clienteController.registrarCliente(id, nombre);
-        System.out.println("Cliente registrado exitosamente.");
-    }
+        int opcion = 0;
+        do {
+            System.out.println("Menu de Clientes:");
+            System.out.println("1. Registrar Cliente");
+            System.out.println("2. Mostrar Todos los Clientes");
+            System.out.println("3. Actualizar Cliente");
+            System.out.println("4. Eliminar Cliente");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opcion: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-    public void mostrarTodosLosClientes() {
-        for (Cliente cliente : clienteController.obtenerTodosLosClientes()) {
-            System.out.println(cliente);
-        }
-    }
-
-    public void actualizarClienteDesdeConsola() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del cliente a actualizar: ");
-        String id = scanner.nextLine();
-        System.out.print("Ingrese el nuevo nombre del cliente: ");
-        String nombre = scanner.nextLine();
-        clienteController.actualizarCliente(id, nombre);
-        System.out.println("Cliente actualizado exitosamente.");
-    }
-
-    public void eliminarClienteDesdeConsola() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del cliente a eliminar: ");
-        String id = scanner.nextLine();
-        clienteController.eliminarCliente(id);
-        System.out.println("Cliente eliminado exitosamente.");
+            switch (opcion) {
+                case 1:
+                    clienteController.registrarClienteDesdeConsola();
+                    break;
+                case 2:
+                    clienteController.mostrarTodosLosClientes();
+                    break;
+                case 3:
+                    clienteController.actualizarClienteDesdeConsola();
+                    break;
+                case 4:
+                    clienteController.eliminarClienteDesdeConsola();
+                    break;
+                case 5:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida. Intente de nuevo.");
+            }
+        } while (opcion != 5);
     }
 
     public static void main(String[] args) {
         ClienteView vista = new ClienteView();
-        vista.registrarClienteDesdeConsola();
-        vista.mostrarTodosLosClientes();
-        vista.actualizarClienteDesdeConsola();
-        vista.eliminarClienteDesdeConsola();
+        vista.mostrarMenu();
     }
 }
