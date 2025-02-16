@@ -15,7 +15,7 @@ public class ClienteDAOimp implements ClienteDAO {
 
     @Override
     public void registrarCliente(Cliente cliente) {
-        String sql = "INSERT INTO clientes (id, nombre) VALUES (?, ?)";
+        String sql = "INSERT INTO Clientes (id, nombre) VALUES (?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, cliente.getId());
             stmt.setString(2, cliente.getNombre());
@@ -27,7 +27,7 @@ public class ClienteDAOimp implements ClienteDAO {
 
     @Override
     public Cliente obtenerClientePorId(String id) {
-        String sql = "SELECT * FROM clientes WHERE id = ?";
+        String sql = "SELECT * FROM Clientes WHERE id = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -43,7 +43,7 @@ public class ClienteDAOimp implements ClienteDAO {
     @Override
     public List<Cliente> obtenerTodosLosClientes() {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM clientes";
+        String sql = "SELECT * FROM Clientes";
         try (Statement stmt = conexion.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -57,7 +57,7 @@ public class ClienteDAOimp implements ClienteDAO {
 
     @Override
     public void actualizarCliente(Cliente cliente) {
-        String sql = "UPDATE clientes SET nombre = ? WHERE id = ?";
+        String sql = "UPDATE Clientes SET nombre = ? WHERE id = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, cliente.getNombre());
             stmt.setString(2, cliente.getId());
@@ -69,7 +69,7 @@ public class ClienteDAOimp implements ClienteDAO {
 
     @Override
     public void eliminarCliente(String id) {
-        String sql = "DELETE FROM clientes WHERE id = ?";
+        String sql = "DELETE FROM Clientes WHERE id = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.executeUpdate();

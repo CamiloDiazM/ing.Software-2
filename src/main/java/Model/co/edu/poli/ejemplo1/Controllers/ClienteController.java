@@ -9,7 +9,9 @@ public class ClienteController {
 
     private ClienteDAO clienteDAO;
 
-
+    public ClienteController(ClienteDAO clienteDAO) {
+        this.clienteDAO = clienteDAO;
+    }
 
     public void registrarCliente(String id, String nombre) {
         Cliente cliente = new Cliente(id, nombre);

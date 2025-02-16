@@ -10,7 +10,7 @@ public class Conexion {
 
     private Conexion() {
         try {
-            String URL = "jdbc:mysql://localhost:3306/prueba";
+            String URL = "jdbc:mysql://localhost:3306/dao";
             String USUARIO = "root";
             String CONTRASENA = "Politecnico123*";
             this.conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
