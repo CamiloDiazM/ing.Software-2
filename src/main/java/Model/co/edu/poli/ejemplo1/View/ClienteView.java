@@ -52,4 +52,10 @@ public class ClienteView {
         ClienteView vista = new ClienteView();
         vista.mostrarMenu();
     }
+
+    /*
+     * Samuel Cajica Pacheco
+     * Camilo Andrés Díaz Montoya
+     * Andrés David González Cuesta
+     */
 }
