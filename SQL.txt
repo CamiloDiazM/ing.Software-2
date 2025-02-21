@@ -1,0 +1,31 @@
+CREATE DATABASE dao;
+
+USE dao;
+
+CREATE TABLE Clientes (
+    id VARCHAR(50) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Productos (
+    id VARCHAR(50) PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Pedidos (
+    numPedido VARCHAR(50) PRIMARY KEY,
+    fecha DATE NOT NULL,
+    cliente_id VARCHAR(50),
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(id)
+);
+
+CREATE TABLE Pedido_Producto (
+    pedido_numPedido VARCHAR(50),
+    producto_id VARCHAR(50),
+    PRIMARY KEY (pedido_numPedido, producto_id),
+    FOREIGN KEY (pedido_numPedido) REFERENCES Pedidos(numPedido),
+    FOREIGN KEY (producto_id) REFERENCES Productos(id)
+);
+
+select * from clientes;
