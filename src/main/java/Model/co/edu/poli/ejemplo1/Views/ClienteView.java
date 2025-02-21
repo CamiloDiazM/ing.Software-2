@@ -1,4 +1,4 @@
-package Model.co.edu.poli.ejemplo1.View;
+package Model.co.edu.poli.ejemplo1.Views;
 
 import Model.co.edu.poli.ejemplo1.Controllers.ClienteController;
 import Model.co.edu.poli.ejemplo1.Services.ClienteDAOimp;
@@ -48,8 +48,4 @@ public class ClienteView {
         } while (opcion != 5);
     }
 
-    public static void main(String[] args) {
-        ClienteView vista = new ClienteView();
-        vista.mostrarMenu();
-    }
 }

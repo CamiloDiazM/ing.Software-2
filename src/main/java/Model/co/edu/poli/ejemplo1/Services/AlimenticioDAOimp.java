@@ -1,24 +1,25 @@
 package Model.co.edu.poli.ejemplo1.Services;
 
-import Model.co.edu.poli.ejemplo1.Model.Cliente;
+import Model.co.edu.poli.ejemplo1.Model.Alimenticio;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteDAOimp implements DAO<Cliente> {
+public class AlimenticioDAOimp implements DAO<Alimenticio> {
 
     private Connection conexion;
 
-    public ClienteDAOimp() {
+    public AlimenticioDAOimp() {
         this.conexion = Conexion.obtenerInstancia().obtenerConexion();
     }
 
     @Override
-    public void registrar(Cliente cliente) {
-        String sql = "INSERT INTO Clientes (id, nombre) VALUES (?, ?)";
+    public void registrar(Alimenticio alimenticio) {
+        String sql = "INSERT INTO Alimenticios (id_producto, descripcion, calorias) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
-            stmt.setString(1, cliente.getId());
-            stmt.setString(2, cliente.getNombre());
+            stmt.setString(1, alimenticio.getIdProducto());
+            stmt.setString(2, alimenticio.getDescripcion());
+            stmt.setString(3, alimenticio.getCalorias());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -26,13 +27,13 @@ public class ClienteDAOimp implements DAO<Cliente> {
     }
 
     @Override
-    public Cliente obtenerPorId(String id) {
-        String sql = "SELECT * FROM Clientes WHERE id = ?";
+    public Alimenticio obtenerPorId(String id) {
+        String sql = "SELECT * FROM Alimenticios WHERE id_producto = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Cliente(rs.getString("id"), rs.getString("nombre"));
+                return new Alimenticio(rs.getString("id_producto"), rs.getString("descripcion"), rs.getString("calorias"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,26 +42,27 @@ public class ClienteDAOimp implements DAO<Cliente> {
     }
 
     @Override
-    public List<Cliente> obtenerTodos() {
-        List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM Clientes";
+    public List<Alimenticio> obtenerTodos() {
+        List<Alimenticio> alimenticios = new ArrayList<>();
+        String sql = "SELECT * FROM Alimenticios";
         try (Statement stmt = conexion.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                clientes.add(new Cliente(rs.getString("id"), rs.getString("nombre")));
+                alimenticios.add(new Alimenticio(rs.getString("id_producto"), rs.getString("descripcion"), rs.getString("calorias")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return clientes;
+        return alimenticios;
     }
 
     @Override
-    public void actualizar(Cliente cliente) {
-        String sql = "UPDATE Clientes SET nombre = ? WHERE id = ?";
+    public void actualizar(Alimenticio alimenticio) {
+        String sql = "UPDATE Alimenticios SET descripcion = ?, calorias = ? WHERE id_producto = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
-            stmt.setString(1, cliente.getNombre());
-            stmt.setString(2, cliente.getId());
+            stmt.setString(1, alimenticio.getDescripcion());
+            stmt.setString(2, alimenticio.getCalorias());
+            stmt.setString(3, alimenticio.getIdProducto());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +71,7 @@ public class ClienteDAOimp implements DAO<Cliente> {
 
     @Override
     public void eliminar(String id) {
-        String sql = "DELETE FROM Clientes WHERE id = ?";
+        String sql = "DELETE FROM Alimenticios WHERE id_producto = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.executeUpdate();

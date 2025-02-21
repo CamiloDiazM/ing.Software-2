@@ -1,38 +1,38 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Services.ClienteDAO;
+import Model.co.edu.poli.ejemplo1.Services.DAO;
 import Model.co.edu.poli.ejemplo1.Model.Cliente;
 import java.util.List;
 import java.util.Scanner;
 
 public class ClienteController {
 
-    private ClienteDAO clienteDAO;
+    private DAO<Cliente> DAO;
 
-    public ClienteController(ClienteDAO clienteDAO) {
-        this.clienteDAO = clienteDAO;
+    public ClienteController(DAO DAO) {
+        this.DAO = DAO;
     }
 
     public void registrarCliente(String id, String nombre) {
         Cliente cliente = new Cliente(id, nombre);
-        clienteDAO.registrarCliente(cliente);
+        DAO.registrar(cliente);
     }
 
-    public Cliente obtenerClientePorId(String id) {
-        return clienteDAO.obtenerClientePorId(id);
+    public Cliente obtenerPorId(String id) {
+        return DAO.obtenerPorId(id);
     }
 
     public List<Cliente> obtenerTodosLosClientes() {
-        return clienteDAO.obtenerTodosLosClientes();
+        return DAO.obtenerTodos();
     }
 
     public void actualizarCliente(String id, String nombre) {
         Cliente cliente = new Cliente(id, nombre);
-        clienteDAO.actualizarCliente(cliente);
+        DAO.actualizar(cliente);
     }
 
     public void eliminarCliente(String id) {
-        clienteDAO.eliminarCliente(id);
+        DAO.eliminar(id);
     }
 
     public void registrarClienteDesdeConsola() {
