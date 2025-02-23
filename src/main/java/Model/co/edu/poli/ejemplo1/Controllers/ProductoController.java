@@ -1,82 +1,85 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Services.AlimenticioDAOimp;
-import Model.co.edu.poli.ejemplo1.Services.DAO;
 import Model.co.edu.poli.ejemplo1.Model.Producto;
-import Model.co.edu.poli.ejemplo1.Services.ElectricoDAOimp;
+import Model.co.edu.poli.ejemplo1.Model.Electrico;
+import Model.co.edu.poli.ejemplo1.Model.Alimenticio;
+import Model.co.edu.poli.ejemplo1.Services.ProductoDAOimp;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductoController {
 
-    private DAO<Producto> productoDAO;
+    private ProductoDAOimp productoDAO;
 
-    public ProductoController(DAO<Producto> productoDAO) {
-        this.productoDAO = productoDAO;
-    }
-
-    public void registrarProducto(String id, String tipo) {
-        Producto producto = new Producto(id, tipo);
-        productoDAO.registrar(producto);
-    }
-
-    public Producto obtenerPorId(String id) {
-        return productoDAO.obtenerPorId(id);
-    }
-
-    public List<Producto> obtenerTodosLosProductos() {
-        return productoDAO.obtenerTodos();
-    }
-
-    public void actualizarProducto(String id, String tipo) {
-        Producto producto = new Producto(id, tipo);
-        productoDAO.actualizar(producto);
-    }
-
-    public void eliminarProducto(String id) {
-        productoDAO.eliminar(id);
+    public ProductoController() {
+        this.productoDAO = new ProductoDAOimp();
     }
 
     public void registrarProductoDesdeConsola() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del producto: ");
+        System.out.print("Ingrese ID del producto: ");
         String id = scanner.nextLine();
-        System.out.print("Ingrese el tipo del producto (Electrico/Alimenticio): ");
+        System.out.print("Ingrese tipo del producto (Electrico/Alimenticio): ");
         String tipo = scanner.nextLine();
+        System.out.print("Ingrese descripcion del producto: ");
+        String descripcion = scanner.nextLine();
 
-        registrarProducto(id, tipo);
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            System.out.println("Descripcion no puede estar vacia.");
+            return;
+        }
 
-        if (tipo.equalsIgnoreCase("Electrico")) {
-            new ElectricoController(new ElectricoDAOimp()).registrarElectricoDesdeConsola(id);
-        } else if (tipo.equalsIgnoreCase("Alimenticio")) {
-            new AlimenticioController(new AlimenticioDAOimp()).registrarAlimenticioDesdeConsola(id);
+        if ("Electrico".equalsIgnoreCase(tipo)) {
+            System.out.print("Ingrese voltaje del producto: ");
+            String voltaje = scanner.nextLine();
+            productoDAO.registrar(new Electrico(id, tipo, descripcion, voltaje));
+        } else if ("Alimenticio".equalsIgnoreCase(tipo)) {
+            System.out.print("Ingrese calorias del producto: ");
+            String calorias = scanner.nextLine();
+            productoDAO.registrar(new Alimenticio(id, tipo, descripcion, calorias));
         } else {
-            System.out.println("Tipo de producto no válido.");
+            System.out.println("Tipo de producto no valido.");
         }
     }
 
     public void mostrarTodosLosProductos() {
-        for (Producto producto : obtenerTodosLosProductos()) {
+        List<Producto> productos = productoDAO.obtenerTodos();
+        for (Producto producto : productos) {
             System.out.println(producto);
         }
     }
 
     public void actualizarProductoDesdeConsola() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del producto a actualizar: ");
+        System.out.print("Ingrese ID del producto a actualizar: ");
         String id = scanner.nextLine();
-        System.out.print("Ingrese el nuevo tipo del producto: ");
-        String tipo = scanner.nextLine();
-        actualizarProducto(id, tipo);
-        System.out.println("Producto actualizado exitosamente.");
+        Producto producto = productoDAO.obtenerPorId(id);
+        if (producto != null) {
+            System.out.print("Ingrese nueva descripcion del producto: ");
+            String descripcion = scanner.nextLine();
+            producto.setDescripcion(descripcion);
+
+            if (producto instanceof Electrico) {
+                System.out.print("Ingrese nuevo voltaje del producto: ");
+                String voltaje = scanner.nextLine();
+                ((Electrico) producto).setVoltaje(voltaje);
+            } else if (producto instanceof Alimenticio) {
+                System.out.print("Ingrese nuevas calorias del producto: ");
+                String calorias = scanner.nextLine();
+                ((Alimenticio) producto).setCalorias(calorias);
+            }
+
+            productoDAO.actualizar(producto);
+        } else {
+            System.out.println("Producto no encontrado.");
+        }
     }
 
     public void eliminarProductoDesdeConsola() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del producto a eliminar: ");
+        System.out.print("Ingrese ID del producto a eliminar: ");
         String id = scanner.nextLine();
-        eliminarProducto(id);
-        System.out.println("Producto eliminado exitosamente.");
+        productoDAO.eliminar(id);
     }
 }

@@ -1,34 +1,24 @@
 package Model.co.edu.poli.ejemplo1.Model;
 
-public class Electrico {
-    private String idProducto;
-    private String descripcion;
+public class Electrico extends Producto {
+
     private String voltaje;
 
-    public Electrico(String idProducto, String descripcion, String voltaje) {
-        this.idProducto = idProducto;
-        this.descripcion = descripcion;
+    public Electrico(String idProducto, String tipo, String descripcion, String voltaje) {
+        super(idProducto, tipo, descripcion);
         this.voltaje = voltaje;
-    }
-
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 
     public String getVoltaje() {
         return voltaje;
     }
 
+    public void setVoltaje(String voltaje) {
+        this.voltaje = voltaje;
+    }
+
     @Override
     public String toString() {
-        return "Electrico{" +
-                "idProducto='" + idProducto + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", voltaje='" + voltaje + '\'' +
-                '}';
+        return super.toString();
     }
 }

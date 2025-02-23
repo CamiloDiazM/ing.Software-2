@@ -1,34 +1,24 @@
 package Model.co.edu.poli.ejemplo1.Model;
 
-public class Alimenticio {
-    private String idProducto;
-    private String descripcion;
+public class Alimenticio extends Producto {
+
     private String calorias;
 
-    public Alimenticio(String idProducto, String descripcion, String calorias) {
-        this.idProducto = idProducto;
-        this.descripcion = descripcion;
+    public Alimenticio(String id, String tipo, String descripcion, String calorias) {
+        super(id, tipo, descripcion);
         this.calorias = calorias;
-    }
-
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 
     public String getCalorias() {
         return calorias;
     }
 
+    public void setCalorias(String calorias) {
+        this.calorias = calorias;
+    }
+
     @Override
     public String toString() {
-        return "Alimenticio{" +
-                "idProducto='" + idProducto + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", calorias='" + calorias + '\'' +
-                '}';
+        return super.toString();
     }
 }
