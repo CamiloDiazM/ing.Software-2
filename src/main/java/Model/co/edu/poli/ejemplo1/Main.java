@@ -5,6 +5,11 @@ import Model.co.edu.poli.ejemplo1.Views.PedidoView;
 import Model.co.edu.poli.ejemplo1.Views.ClienteView;
 
 import java.util.Scanner;
+/*
+ * Samuel Cajica Pacheco
+ * Camilo Andrés Díaz Montoya 
+ * Andrés David González Cuesta
+ */
 
 public class Main {
 
