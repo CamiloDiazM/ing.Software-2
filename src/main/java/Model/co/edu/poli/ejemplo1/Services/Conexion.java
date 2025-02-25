@@ -9,22 +9,17 @@ public class Conexion {
     private static Conexion instancia;
     private Connection conexion;
 
-    private Conexion() {
-        try {
-            ResourceBundle bundle = ResourceBundle.getBundle("config");
+    private Conexion() throws SQLException {
+        ResourceBundle bundle = ResourceBundle.getBundle("config");
 
-            String URL = bundle.getString("db.url");
-            String USUARIO = bundle.getString("db.username");
-            String CONTRASENA = bundle.getString("db.password");
+        String URL = bundle.getString("db.url");
+        String USUARIO = bundle.getString("db.username");
+        String CONTRASENA = bundle.getString("db.password");
 
-            this.conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
-            System.out.println("Conexion exitosa");
-        } catch (SQLException e) {
-            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
-        }
+        this.conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
     }
 
-    public static Conexion obtenerInstancia() {
+    public static Conexion obtenerInstancia() throws SQLException {
         if (instancia == null) {
             instancia = new Conexion();
         }
@@ -35,13 +30,9 @@ public class Conexion {
         return conexion;
     }
 
-    public void cerrarConexion() {
+    public void cerrarConexion() throws SQLException {
         if (conexion != null) {
-            try {
-                conexion.close();
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexion: " + e.getMessage());
-            }
+            conexion.close();
         }
     }
 }
