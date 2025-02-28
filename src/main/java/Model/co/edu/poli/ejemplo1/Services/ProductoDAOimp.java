@@ -8,11 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductoDAOimp implements DAO<Producto> {
+public class ProductoDAOimp implements ProductoDAO {
 
     private Connection conexion;
 
-    public ProductoDAOimp() {
+    public ProductoDAOimp() throws SQLException {
         this.conexion = Conexion.obtenerInstancia().obtenerConexion();
     }
 
@@ -165,5 +165,44 @@ public class ProductoDAOimp implements DAO<Producto> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Producto> obtenerPorTipo(String tipo) {
+        List<Producto> productos = new ArrayList<>();
+        String sqlProducto = "SELECT * FROM Productos WHERE tipo = ?";
+        try (PreparedStatement stmtProducto = conexion.prepareStatement(sqlProducto)) {
+            stmtProducto.setString(1, tipo);
+            ResultSet rsProducto = stmtProducto.executeQuery();
+            while (rsProducto.next()) {
+                String id = rsProducto.getString("id");
+                String descripcion = rsProducto.getString("descripcion");
+
+                if ("Electrico".equals(tipo)) {
+                    String sqlElectrico = "SELECT * FROM Electricos WHERE id_producto = ?";
+                    try (PreparedStatement stmtElectrico = conexion.prepareStatement(sqlElectrico)) {
+                        stmtElectrico.setString(1, id);
+                        ResultSet rsElectrico = stmtElectrico.executeQuery();
+                        if (rsElectrico.next()) {
+                            String voltaje = rsElectrico.getString("voltaje");
+                            productos.add(new Electrico(id, tipo, descripcion, voltaje));
+                        }
+                    }
+                } else if ("Alimenticio".equals(tipo)) {
+                    String sqlAlimenticio = "SELECT * FROM Alimenticios WHERE id_producto = ?";
+                    try (PreparedStatement stmtAlimenticio = conexion.prepareStatement(sqlAlimenticio)) {
+                        stmtAlimenticio.setString(1, id);
+                        ResultSet rsAlimenticio = stmtAlimenticio.executeQuery();
+                        if (rsAlimenticio.next()) {
+                            String calorias = rsAlimenticio.getString("calorias");
+                            productos.add(new Alimenticio(id, tipo, descripcion, calorias));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productos;
     }
 }

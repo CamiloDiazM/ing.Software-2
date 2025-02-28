@@ -1,10 +1,14 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
+import Model.co.edu.poli.ejemplo1.Model.AlimenticioFactory;
+import Model.co.edu.poli.ejemplo1.Model.ElectricoFactory;
+import Model.co.edu.poli.ejemplo1.Model.ProductoFactory;
 import Model.co.edu.poli.ejemplo1.Model.Producto;
 import Model.co.edu.poli.ejemplo1.Model.Electrico;
 import Model.co.edu.poli.ejemplo1.Model.Alimenticio;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAOimp;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +16,7 @@ public class ProductoController {
 
     private ProductoDAOimp productoDAO;
 
-    public ProductoController() {
+    public ProductoController() throws SQLException {
         this.productoDAO = new ProductoDAOimp();
     }
 
@@ -25,21 +29,25 @@ public class ProductoController {
         System.out.print("Ingrese descripcion del producto: ");
         String descripcion = scanner.nextLine();
 
-        if (descripcion == null || descripcion.trim().isEmpty()) {
-            System.out.println("Descripcion no puede estar vacia.");
-            return;
-        }
+        ProductoFactory factory;
+        Producto producto = null;
 
         if ("Electrico".equalsIgnoreCase(tipo)) {
             System.out.print("Ingrese voltaje del producto: ");
             String voltaje = scanner.nextLine();
-            productoDAO.registrar(new Electrico(id, tipo, descripcion, voltaje));
+            factory = new ElectricoFactory();
+            producto = factory.crearProducto(id, tipo, descripcion, voltaje);
         } else if ("Alimenticio".equalsIgnoreCase(tipo)) {
             System.out.print("Ingrese calorias del producto: ");
             String calorias = scanner.nextLine();
-            productoDAO.registrar(new Alimenticio(id, tipo, descripcion, calorias));
+            factory = new AlimenticioFactory();
+            producto = factory.crearProducto(id, tipo, descripcion, calorias);
         } else {
             System.out.println("Tipo de producto no valido.");
+        }
+
+        if (producto != null) {
+            productoDAO.registrar(producto);
         }
     }
 
@@ -81,5 +89,15 @@ public class ProductoController {
         System.out.print("Ingrese ID del producto a eliminar: ");
         String id = scanner.nextLine();
         productoDAO.eliminar(id);
+    }
+
+    public void mostrarProductosPorTipo() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el tipo de producto a consultar: ");
+        String tipo = scanner.nextLine();
+        List<Producto> productos = productoDAO.obtenerPorTipo(tipo);
+        for (Producto producto : productos) {
+            System.out.println(producto);
+        }
     }
 }

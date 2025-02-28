@@ -1,38 +1,40 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Services.DAO;
+import Model.co.edu.poli.ejemplo1.Services.ClienteDAOimp;
 import Model.co.edu.poli.ejemplo1.Model.Cliente;
+
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class ClienteController {
 
-    private DAO<Cliente> DAO;
+    private ClienteDAOimp clienteDAO;
 
-    public ClienteController(DAO DAO) {
-        this.DAO = DAO;
+    public ClienteController() throws SQLException {
+        this.clienteDAO = new ClienteDAOimp();
     }
 
     public void registrarCliente(String id, String nombre) {
         Cliente cliente = new Cliente(id, nombre);
-        DAO.registrar(cliente);
+        clienteDAO.registrar(cliente);
     }
 
     public Cliente obtenerPorId(String id) {
-        return DAO.obtenerPorId(id);
+        return clienteDAO.obtenerPorId(id);
     }
 
     public List<Cliente> obtenerTodosLosClientes() {
-        return DAO.obtenerTodos();
+        return clienteDAO.obtenerTodos();
     }
 
     public void actualizarCliente(String id, String nombre) {
         Cliente cliente = new Cliente(id, nombre);
-        DAO.actualizar(cliente);
+        clienteDAO.actualizar(cliente);
     }
 
     public void eliminarCliente(String id) {
-        DAO.eliminar(id);
+        clienteDAO.eliminar(id);
     }
 
     public void registrarClienteDesdeConsola() {

@@ -1,15 +1,20 @@
 package Model.co.edu.poli.ejemplo1.Views;
 
 import Model.co.edu.poli.ejemplo1.Controllers.ClienteController;
-import Model.co.edu.poli.ejemplo1.Services.ClienteDAOimp;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ClienteView {
 
     private ClienteController clienteController;
 
-    public ClienteView() {
-        this.clienteController = new ClienteController(new ClienteDAOimp());
+    public ClienteView(){
+        try {
+            this.clienteController = new ClienteController();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public void mostrarMenu() {
