@@ -1,6 +1,6 @@
 package Model.co.edu.poli.ejemplo1.Model;
 
-public class Producto {
+public abstract class Producto {
 
     public Producto(String id, String tipo, String descripcion) {
         this.id = id;
