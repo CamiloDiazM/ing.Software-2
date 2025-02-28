@@ -6,6 +6,7 @@ import Model.co.edu.poli.ejemplo1.Model.ProductoFactory;
 import Model.co.edu.poli.ejemplo1.Model.Producto;
 import Model.co.edu.poli.ejemplo1.Model.Electrico;
 import Model.co.edu.poli.ejemplo1.Model.Alimenticio;
+import Model.co.edu.poli.ejemplo1.Services.ProductoDAO;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAOimp;
 
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 
 public class ProductoController {
 
-    private ProductoDAOimp productoDAO;
+    private ProductoDAO productoDAO;
 
     public ProductoController() throws SQLException {
         this.productoDAO = new ProductoDAOimp();
