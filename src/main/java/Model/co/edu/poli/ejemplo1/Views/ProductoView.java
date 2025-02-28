@@ -2,6 +2,7 @@ package Model.co.edu.poli.ejemplo1.Views;
 
 import Model.co.edu.poli.ejemplo1.Controllers.ProductoController;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ProductoView {
@@ -9,7 +10,11 @@ public class ProductoView {
     private ProductoController productoController;
 
     public ProductoView() {
-        this.productoController = new ProductoController();
+        try {
+            this.productoController = new ProductoController();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public void mostrarMenu() {
@@ -22,7 +27,8 @@ public class ProductoView {
             System.out.println("2. Mostrar Todos los Productos");
             System.out.println("3. Actualizar Producto");
             System.out.println("4. Eliminar Producto");
-            System.out.println("5. Salir");
+            System.out.println("5. Consultar Productos por Tipo");
+            System.out.println("6. Salir");
             System.out.print("Seleccione una opcion: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
@@ -41,16 +47,14 @@ public class ProductoView {
                     productoController.eliminarProductoDesdeConsola();
                     break;
                 case 5:
+                    productoController.mostrarProductosPorTipo();
+                    break;
+                case 6:
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opcion no valida. Intente de nuevo.");
             }
-        } while (opcion != 5);
-    }
-
-    public static void main(String[] args) {
-        ProductoView view = new ProductoView();
-        view.mostrarMenu();
+        } while (opcion != 6);
     }
 }

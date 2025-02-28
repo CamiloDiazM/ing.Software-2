@@ -9,7 +9,7 @@ public class ClienteDAOimp implements DAO<Cliente> {
 
     private Connection conexion;
 
-    public ClienteDAOimp() {
+    public ClienteDAOimp() throws SQLException {
         this.conexion = Conexion.obtenerInstancia().obtenerConexion();
     }
 
