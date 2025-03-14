@@ -1,6 +1,6 @@
 package Model.co.edu.poli.ejemplo1.Model;
 
-public abstract class Producto {
+public abstract class Producto implements Cloneable {
 
     public Producto(String id, String tipo, String descripcion) {
         this.id = id;
@@ -14,6 +14,9 @@ public abstract class Producto {
 
     public String getId() {
         return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTipo() {
@@ -35,5 +38,13 @@ public abstract class Producto {
                 ", tipo='" + tipo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
+    }
+
+    public Producto clone() {
+        try {
+            return (Producto) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("No se ha podido clonar el producto", e);
+        }
     }
 }

@@ -30,6 +30,14 @@ public class Cliente {
         return nombre;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
 
 
 

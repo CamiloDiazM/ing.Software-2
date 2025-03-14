@@ -2,72 +2,111 @@ package Model.co.edu.poli.ejemplo1.Controllers;
 
 import Model.co.edu.poli.ejemplo1.Services.ClienteDAOimp;
 import Model.co.edu.poli.ejemplo1.Model.Cliente;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Optional;
 
 public class ClienteController {
 
     private ClienteDAOimp clienteDAO;
 
+    @FXML
+    private Button btnSalir;
+
     public ClienteController() throws SQLException {
         this.clienteDAO = new ClienteDAOimp();
     }
 
-    public void registrarCliente(String id, String nombre) {
+    @FXML
+    public void registrarCliente() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Registrar Cliente");
+        dialog.setHeaderText("Ingrese los detalles del cliente");
+
+        dialog.setContentText("ID del cliente:");
+        Optional<String> result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String id = result.get();
+
+        dialog.setContentText("Nombre del cliente:");
+        result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String nombre = result.get();
+
         Cliente cliente = new Cliente(id, nombre);
         clienteDAO.registrar(cliente);
+        showAlert("Cliente registrado exitosamente.");
     }
 
-    public Cliente obtenerPorId(String id) {
-        return clienteDAO.obtenerPorId(id);
-    }
-
-    public List<Cliente> obtenerTodosLosClientes() {
-        return clienteDAO.obtenerTodos();
-    }
-
-    public void actualizarCliente(String id, String nombre) {
-        Cliente cliente = new Cliente(id, nombre);
-        clienteDAO.actualizar(cliente);
-    }
-
-    public void eliminarCliente(String id) {
-        clienteDAO.eliminar(id);
-    }
-
-    public void registrarClienteDesdeConsola() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del cliente: ");
-        String id = scanner.nextLine();
-        System.out.print("Ingrese el nombre del cliente: ");
-        String nombre = scanner.nextLine();
-        registrarCliente(id, nombre);
-        System.out.println("Cliente registrado exitosamente.");
-    }
-
+    @FXML
     public void mostrarTodosLosClientes() {
-        for (Cliente cliente : obtenerTodosLosClientes()) {
-            System.out.println(cliente);
+        List<Cliente> clientes = clienteDAO.obtenerTodos();
+        StringBuilder sb = new StringBuilder();
+        for (Cliente cliente : clientes) {
+            sb.append(cliente).append("\n");
+        }
+        showAlert(sb.toString());
+    }
+
+    @FXML
+    public void actualizarCliente() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Actualizar Cliente");
+        dialog.setHeaderText("Ingrese el ID del cliente a actualizar");
+
+        dialog.setContentText("ID del cliente:");
+        Optional<String> result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String id = result.get();
+
+        Cliente cliente = clienteDAO.obtenerPorId(id);
+        if (cliente != null) {
+            dialog.setContentText("Nuevo nombre del cliente:");
+            result = dialog.showAndWait();
+            if (!result.isPresent()) return;
+            String nombre = result.get();
+            cliente.setNombre(nombre);
+
+            clienteDAO.actualizar(cliente);
+            showAlert("Cliente actualizado exitosamente.");
+        } else {
+            showAlert("Cliente no encontrado.");
         }
     }
 
-    public void actualizarClienteDesdeConsola() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del cliente a actualizar: ");
-        String id = scanner.nextLine();
-        System.out.print("Ingrese el nuevo nombre del cliente: ");
-        String nombre = scanner.nextLine();
-        actualizarCliente(id, nombre);
-        System.out.println("Cliente actualizado exitosamente.");
+    @FXML
+    public void eliminarCliente() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Eliminar Cliente");
+        dialog.setHeaderText("Ingrese el ID del cliente a eliminar");
+
+        dialog.setContentText("ID del cliente:");
+        Optional<String> result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String id = result.get();
+
+        clienteDAO.eliminar(id);
+        showAlert("Cliente eliminado exitosamente.");
     }
 
-    public void eliminarClienteDesdeConsola() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el ID del cliente a eliminar: ");
-        String id = scanner.nextLine();
-        eliminarCliente(id);
-        System.out.println("Cliente eliminado exitosamente.");
+    @FXML
+    private void salir() {
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Informacion");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

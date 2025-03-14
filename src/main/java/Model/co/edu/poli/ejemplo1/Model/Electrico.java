@@ -21,4 +21,8 @@ public class Electrico extends Producto {
     public String toString() {
         return super.toString();
     }
+
+    public Electrico clone() {
+        return (Electrico) super.clone();
+    }
 }

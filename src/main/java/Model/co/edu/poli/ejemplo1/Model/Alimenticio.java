@@ -21,4 +21,8 @@ public class Alimenticio extends Producto {
     public String toString() {
         return super.toString();
     }
+
+    public Alimenticio clone() {
+        return (Alimenticio) super.clone();
+    }
 }
