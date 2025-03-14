@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Model.co.edu.poli.ejemplo1.Controllers.ProductoController">
+    <children>
+        <Button fx:id="btnRegistrar" layoutX="100.0" layoutY="20.0" mnemonicParsing="false" text="Registrar Producto" onAction="#registrarProducto"/>
+        <Button fx:id="btnMostrarTodos" layoutX="80.0" layoutY="70.0" mnemonicParsing="false" text="Mostrar Todos los Productos" onAction="#mostrarTodosLosProductos"/>
+        <Button fx:id="btnActualizar" layoutX="90.0" layoutY="120.0" mnemonicParsing="false" text="Actualizar Producto" onAction="#actualizarProducto"/>
+        <Button fx:id="btnEliminar" layoutX="100.0" layoutY="170.0" mnemonicParsing="false" text="Eliminar Producto" onAction="#eliminarProducto"/>
+        <Button fx:id="btnConsultarPorTipo" layoutX="70.0" layoutY="220.0" mnemonicParsing="false" text="Consultar Productos por Tipo" onAction="#mostrarProductosPorTipo"/>
+        <Button fx:id="btnClonar" layoutX="100.0" layoutY="270.0" mnemonicParsing="false" text="Clonar Producto" onAction="#clonarProducto"/>
+        <Button fx:id="btnSalir" layoutX="130.0" layoutY="320.0" mnemonicParsing="false" text="Salir" onAction="#salir"/>
+    </children>
+</AnchorPane>
