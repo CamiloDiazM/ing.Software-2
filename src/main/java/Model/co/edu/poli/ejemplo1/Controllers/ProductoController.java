@@ -176,7 +176,7 @@ public class ProductoController {
 
         Producto producto = productoDAO.obtenerPorId(id);
         if (producto != null) {
-            Producto clon = producto.clone();
+            Producto clon = producto.clonar();
 
             dialog.setContentText("Nuevo ID para el producto clonado:");
             result = dialog.showAndWait();
