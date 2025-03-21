@@ -30,7 +30,7 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/ProductoView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Productos");
-            stage.setScene(new Scene(root, 300, 400));
+            stage.setScene(new Scene(root, 300, 500));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

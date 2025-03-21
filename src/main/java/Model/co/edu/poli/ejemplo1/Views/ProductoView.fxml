@@ -3,14 +3,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Model.co.edu.poli.ejemplo1.Controllers.ProductoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Model.co.edu.poli.ejemplo1.Controllers.ProductoController">
     <children>
         <Button fx:id="btnRegistrar" layoutX="70.0" layoutY="21.0" mnemonicParsing="false" onAction="#registrarProducto" prefHeight="25.0" prefWidth="180.0" text="Registrar Producto" />
         <Button fx:id="btnMostrarTodos" layoutX="71.0" layoutY="71.0" mnemonicParsing="false" onAction="#mostrarTodosLosProductos" prefHeight="25.0" prefWidth="180.0" text="Mostrar Todos los Productos" />
         <Button fx:id="btnActualizar" layoutX="71.0" layoutY="120.0" mnemonicParsing="false" onAction="#actualizarProducto" prefHeight="25.0" prefWidth="180.0" text="Actualizar Producto" />
         <Button fx:id="btnEliminar" layoutX="70.0" layoutY="175.0" mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="25.0" prefWidth="180.0" text="Eliminar Producto" />
         <Button fx:id="btnConsultarPorTipo" layoutX="70.0" layoutY="225.0" mnemonicParsing="false" onAction="#mostrarProductosPorTipo" prefHeight="25.0" prefWidth="180.0" text="Consultar Productos por Tipo" />
-        <Button fx:id="btnClonar" layoutX="71.0" layoutY="277.0" mnemonicParsing="false" onAction="#clonarProducto" prefHeight="25.0" prefWidth="180.0" text="Clonar Producto" />
-        <Button fx:id="btnSalir" layoutX="70.0" layoutY="324.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="180.0" text="Salir" />
-        <Button fx:id="btnConstruirProveedor" layoutX="335.0" layoutY="225.0" mnemonicParsing="false" text="Construir Proveedor" onAction="#construirProveedor"/></children>
+        <Button fx:id="btnConstruirProveedor" layoutX="71.0" layoutY="273.0" mnemonicParsing="false" onAction="#construirProveedor" prefHeight="25.0" prefWidth="180.0" text="Construir Proveedor" />
+        <Button fx:id="btnClonar" layoutX="71.0" layoutY="325.0" mnemonicParsing="false" onAction="#clonarProducto" prefHeight="25.0" prefWidth="180.0" text="Clonar Producto" />
+        <Button fx:id="btnSalir" layoutX="71.0" layoutY="366.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="180.0" text="Salir" />
+
+    </children>
 </AnchorPane>

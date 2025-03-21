@@ -14,7 +14,7 @@ public class MainApp extends Application {
 
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/MainView.fxml"));
-            Scene scene = new Scene(root, 432, 266);
+            Scene scene = new Scene(root, 150, 250);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
