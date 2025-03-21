@@ -1,11 +1,6 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Model.AlimenticioFactory;
-import Model.co.edu.poli.ejemplo1.Model.ElectricoFactory;
-import Model.co.edu.poli.ejemplo1.Model.ProductoFactory;
-import Model.co.edu.poli.ejemplo1.Model.Producto;
-import Model.co.edu.poli.ejemplo1.Model.Electrico;
-import Model.co.edu.poli.ejemplo1.Model.Alimenticio;
+import Model.co.edu.poli.ejemplo1.Model.*;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAO;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAOimp;
 import javafx.fxml.FXML;
@@ -176,7 +171,7 @@ public class ProductoController {
 
         Producto producto = productoDAO.obtenerPorId(id);
         if (producto != null) {
-            Producto clon = producto.clone();
+            Producto clon = producto.clonar();
 
             dialog.setContentText("Nuevo ID para el producto clonado:");
             result = dialog.showAndWait();
@@ -209,6 +204,38 @@ public class ProductoController {
         } else {
             showAlert("Producto no encontrado.");
         }
+    }
+    @FXML
+    public void mostrarCambios() {
+        Empleado emp1 = new Empleado("1", "Juan Perez");
+        Empleado emp2 = new Empleado("2", "Maria Gomez");
+        Empleado emp3 = new Empleado("3", "Carlos Lopez");
+        Empleado emp4 = new Empleado("4", "Ana Martinez");
+
+        Departamento depto1 = new Departamento("Recursos Humanos");
+        depto1.agregarComponente(emp1);
+        depto1.agregarComponente(emp2);
+
+        Departamento depto2 = new Departamento("Tecnología");
+        depto2.agregarComponente(emp3);
+        depto2.agregarComponente(emp4);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Detalles del Departamento 1:\n");
+        sb.append("Departamento [Nombre=Recursos Humanos]\n");
+        for (Componente componente : depto1.getComponentes()) {
+            sb.append("  ");
+            componente.mostrarDetalles(sb);
+        }
+
+        sb.append("\nDetalles del Departamento 2:\n");
+        sb.append("Departamento [Nombre=Tecnología]\n");
+        for (Componente componente : depto2.getComponentes()) {
+            sb.append("  ");
+            componente.mostrarDetalles(sb);
+        }
+
+        showAlert(sb.toString());
     }
 
     @FXML

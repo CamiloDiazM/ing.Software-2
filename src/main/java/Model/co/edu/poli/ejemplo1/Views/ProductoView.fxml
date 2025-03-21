@@ -11,6 +11,7 @@
         <Button fx:id="btnEliminar" layoutX="70.0" layoutY="175.0" mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="25.0" prefWidth="180.0" text="Eliminar Producto" />
         <Button fx:id="btnConsultarPorTipo" layoutX="70.0" layoutY="225.0" mnemonicParsing="false" onAction="#mostrarProductosPorTipo" prefHeight="25.0" prefWidth="180.0" text="Consultar Productos por Tipo" />
         <Button fx:id="btnClonar" layoutX="71.0" layoutY="277.0" mnemonicParsing="false" onAction="#clonarProducto" prefHeight="25.0" prefWidth="180.0" text="Clonar Producto" />
-        <Button fx:id="btnSalir" layoutX="70.0" layoutY="324.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="180.0" text="Salir" />
+        <Button fx:id="btnMostrarCambios" layoutX="71.0" layoutY="324.0" mnemonicParsing="false" onAction="#mostrarCambios" prefHeight="25.0" prefWidth="180.0" text="Composite" />
+        <Button fx:id="btnSalir" layoutX="71.0" layoutY="374.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="180.0" text="Salir" />
     </children>
 </AnchorPane>
