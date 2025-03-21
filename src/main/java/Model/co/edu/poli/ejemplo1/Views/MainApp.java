@@ -1,4 +1,4 @@
-package Model.co.edu.poli.ejemplo1;
+package Model.co.edu.poli.ejemplo1.Views;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
