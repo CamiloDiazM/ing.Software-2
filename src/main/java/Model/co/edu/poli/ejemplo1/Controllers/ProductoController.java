@@ -219,40 +219,4 @@ public class ProductoController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    @FXML
-    public void construirProveedor() {
-        Proveedor.ProveedorBuilder proveedorBuilder = new Proveedor.ProveedorBuilder();
-
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Construir Proveedor");
-        dialog.setHeaderText("Ingrese los detalles del proveedor");
-
-        dialog.setContentText("Evaluacion:");
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(evaluacion -> {
-            if (!evaluacion.isEmpty()) {
-                proveedorBuilder.setEvaluacion(evaluacion);
-            }
-        });
-
-        dialog.setContentText("Certificacion:");
-        result = dialog.showAndWait();
-        result.ifPresent(certificacion -> {
-            if (!certificacion.isEmpty()) {
-                proveedorBuilder.setCertificacion(certificacion);
-            }
-        });
-
-        dialog.setContentText("Politica De Entrega:");
-        result = dialog.showAndWait();
-        result.ifPresent(politicaDeEntrega -> {
-            if (!politicaDeEntrega.isEmpty()) {
-                proveedorBuilder.setPoliticaDeEntrega(politicaDeEntrega);
-            }
-        });
-
-        Proveedor proveedor = proveedorBuilder.build();
-        showAlert(proveedor.toString());
-    }
 }
