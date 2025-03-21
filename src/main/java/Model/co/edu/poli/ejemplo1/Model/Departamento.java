@@ -16,10 +16,6 @@ public class Departamento implements Componente {
         componentes.add(componente);
     }
 
-    public void eliminarComponente(Componente componente) {
-        componentes.remove(componente);
-    }
-
     public List<Componente> getComponentes() {
         return componentes;
     }

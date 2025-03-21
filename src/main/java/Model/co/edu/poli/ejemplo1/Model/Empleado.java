@@ -11,6 +11,6 @@ public class Empleado implements Componente {
 
     @Override
     public void mostrarDetalles(StringBuilder sb) {
-        sb.append("Empleado [ID=").append(id).append(", Nombre=").append(nombre).append("]\n");
+        sb.append("Empleados [ID=").append(id).append(", Nombre=").append(nombre).append("]\n");
     }
 }
