@@ -22,7 +22,8 @@ public class Electrico extends Producto {
         return super.toString();
     }
 
-    public Electrico clone() {
-        return (Electrico) super.clone();
+    @Override
+    public Electrico clonar() {
+        return new Electrico(this.getId(), this.getTipo(), this.getDescripcion(), this.voltaje);
     }
 }

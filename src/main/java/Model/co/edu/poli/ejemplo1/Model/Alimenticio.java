@@ -22,7 +22,8 @@ public class Alimenticio extends Producto {
         return super.toString();
     }
 
-    public Alimenticio clone() {
-        return (Alimenticio) super.clone();
+    @Override
+    public Alimenticio clonar() {
+        return new Alimenticio(this.getId(), this.getTipo(), this.getDescripcion(), this.calorias);
     }
 }
