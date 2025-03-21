@@ -1,11 +1,6 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Model.AlimenticioFactory;
-import Model.co.edu.poli.ejemplo1.Model.ElectricoFactory;
-import Model.co.edu.poli.ejemplo1.Model.ProductoFactory;
-import Model.co.edu.poli.ejemplo1.Model.Producto;
-import Model.co.edu.poli.ejemplo1.Model.Electrico;
-import Model.co.edu.poli.ejemplo1.Model.Alimenticio;
+import Model.co.edu.poli.ejemplo1.Model.*;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAO;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAOimp;
 import javafx.fxml.FXML;
@@ -176,7 +171,7 @@ public class ProductoController {
 
         Producto producto = productoDAO.obtenerPorId(id);
         if (producto != null) {
-            Producto clon = producto.clone();
+            Producto clon = producto.clonar();
 
             dialog.setContentText("Nuevo ID para el producto clonado:");
             result = dialog.showAndWait();
@@ -223,5 +218,41 @@ public class ProductoController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void construirProveedor() {
+        Proveedor.ProveedorBuilder proveedorBuilder = new Proveedor.ProveedorBuilder();
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Construir Proveedor");
+        dialog.setHeaderText("Ingrese los detalles del proveedor");
+
+        dialog.setContentText("Evaluacion:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(evaluacion -> {
+            if (!evaluacion.isEmpty()) {
+                proveedorBuilder.setEvaluacion(evaluacion);
+            }
+        });
+
+        dialog.setContentText("Certificacion:");
+        result = dialog.showAndWait();
+        result.ifPresent(certificacion -> {
+            if (!certificacion.isEmpty()) {
+                proveedorBuilder.setCertificacion(certificacion);
+            }
+        });
+
+        dialog.setContentText("Politica De Entrega:");
+        result = dialog.showAndWait();
+        result.ifPresent(politicaDeEntrega -> {
+            if (!politicaDeEntrega.isEmpty()) {
+                proveedorBuilder.setPoliticaDeEntrega(politicaDeEntrega);
+            }
+        });
+
+        Proveedor proveedor = proveedorBuilder.build();
+        showAlert(proveedor.toString());
     }
 }
