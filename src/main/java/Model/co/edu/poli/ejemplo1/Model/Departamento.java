@@ -21,11 +21,13 @@ public class Departamento implements Componente {
     }
 
     @Override
-    public void mostrarDetalles(StringBuilder sb) {
-        sb.append("Departamento [Nombre=").append(nombre).append("]\n");
+    public String mostrarDetalles() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Departamento [").append(nombre).append("]\n");
         for (Componente componente : componentes) {
             sb.append("  ");
-            componente.mostrarDetalles(sb);
+            sb.append(componente.mostrarDetalles());
         }
+        return sb.toString();
     }
 }

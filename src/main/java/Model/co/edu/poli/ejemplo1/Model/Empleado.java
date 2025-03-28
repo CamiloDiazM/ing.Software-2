@@ -10,7 +10,7 @@ public class Empleado implements Componente {
     }
 
     @Override
-    public void mostrarDetalles(StringBuilder sb) {
-        sb.append("Empleados [ID=").append(id).append(", Nombre=").append(nombre).append("]\n");
+    public String mostrarDetalles() {
+        return "Empleado [ID=" + id + ", Nombre=" + nombre + "]\n";
     }
 }

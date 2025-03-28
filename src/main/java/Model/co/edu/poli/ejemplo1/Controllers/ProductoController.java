@@ -222,18 +222,10 @@ public class ProductoController {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Detalles del Departamento 1:\n");
-        sb.append("Departamento [Nombre=Recursos Humanos]\n");
-        for (Componente componente : depto1.getComponentes()) {
-            sb.append("  ");
-            componente.mostrarDetalles(sb);
-        }
+        sb.append(depto1.mostrarDetalles());
 
         sb.append("\nDetalles del Departamento 2:\n");
-        sb.append("Departamento [Nombre=Tecnología]\n");
-        for (Componente componente : depto2.getComponentes()) {
-            sb.append("  ");
-            componente.mostrarDetalles(sb);
-        }
+        sb.append(depto2.mostrarDetalles());
 
         showAlert(sb.toString());
     }
