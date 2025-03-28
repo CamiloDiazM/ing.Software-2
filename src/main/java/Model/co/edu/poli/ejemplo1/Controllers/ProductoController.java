@@ -207,6 +207,71 @@ public class ProductoController {
     }
 
     @FXML
+    public void construirProveedorPasoAPaso() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Construcción de Proveedor");
+        dialog.setHeaderText("Ingrese los detalles del proveedor");
+
+        // Paso 1: Evaluación
+        dialog.setContentText("Ingrese la puntuación de la evaluación del proveedor:");
+        Optional<String> result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        int puntuacion = Integer.parseInt(result.get());
+
+        dialog.setContentText("Ingrese los comentarios de la evaluación del proveedor:");
+        result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String comentarios = result.get();
+
+        Evaluacion evaluacion = new Evaluacion(puntuacion, comentarios);
+        List<Evaluacion> evaluaciones = List.of(evaluacion);
+
+        // Paso 2: Certificación
+        dialog.setContentText("Ingrese el tipo de certificación del proveedor:");
+        result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String tipoCertificacion = result.get();
+
+        dialog.setContentText("Ingrese la fecha de la certificación del proveedor:");
+        result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String fechaCertificacion = result.get();
+
+        Certificacion certificacion = new Certificacion(tipoCertificacion, fechaCertificacion);
+        List<Certificacion> certificaciones = List.of(certificacion);
+
+        // Paso 3: Política de Entrega
+        dialog.setContentText("Ingrese el tiempo estimado de entrega del proveedor:");
+        result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        int tiempoEstimado = Integer.parseInt(result.get());
+
+        dialog.setContentText("Ingrese las condiciones de entrega del proveedor:");
+        result = dialog.showAndWait();
+        if (!result.isPresent()) return;
+        String condiciones = result.get();
+
+        PoliticaDeEntrega politicaDeEntrega = new PoliticaDeEntrega(tiempoEstimado, condiciones);
+        List<PoliticaDeEntrega> politicasEntrega = List.of(politicaDeEntrega);
+
+        // Construcción del proveedor paso a paso
+        Proveedor proveedor = new Proveedor.ProveedorBuilder()
+                .setEvaluaciones(evaluaciones)
+                .setCertificaciones(certificaciones)
+                .setPoliticasEntrega(politicasEntrega)
+                .build();
+
+        // Mostrar resultado final
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Proveedor Construido");
+        alert.setHeaderText("Proveedor creado exitosamente");
+        alert.setContentText(proveedor.toString());
+        alert.showAndWait();
+    }
+
+
+
+    @FXML
     private void salir() {
         Stage stage = (Stage) btnSalir.getScene().getWindow();
         stage.close();
