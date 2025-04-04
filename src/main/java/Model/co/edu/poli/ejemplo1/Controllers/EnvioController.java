@@ -24,8 +24,8 @@ public class EnvioController {
 
     @FXML
     private void initialize() {
-        envioComboBox.getItems().addAll("Envio Nacional", "Envio Internacional");
-        mercanciaComboBox.getItems().addAll("Documentos", "Carga Normal", "Carga Fragil");
+        envioComboBox.getItems().addAll("Envio Nacional", "Envio Internacional", "Envio Express");
+        mercanciaComboBox.getItems().addAll("Documentos", "Carga Normal", "Carga Fragil", "Peligrosa");
     }
 
     @FXML
@@ -70,6 +70,16 @@ public class EnvioController {
                 Optional<String> material = cargaFragilDialog.showAndWait();
                 tipoMercancia = new CargaFragil(Double.parseDouble(pesoFragil.orElse("0")), dimensionesFragil.orElse(""), contenidoFragil.orElse(""), material.orElse(""));
                 break;
+                case "Peligrosa":
+                TextInputDialog peligrosaDialog = new TextInputDialog();
+                peligrosaDialog.setHeaderText("Ingrese los detalles de la carga peligrosa");
+                peligrosaDialog.setContentText(" Contenido: ");
+                Optional<String> contenidoPeligroso = peligrosaDialog.showAndWait();
+                peligrosaDialog.setContentText(" Precauciones: ");
+                Optional<String> precauciones = peligrosaDialog.showAndWait();
+                tipoMercancia = new Peligrosa(contenidoPeligroso.orElse(""), precauciones.orElse(""));
+                break;
+
         }
         label.setText("Tipo de mercancía seleccionado: " + selectedMercancia);
     }
@@ -81,9 +91,12 @@ public class EnvioController {
             if (tipoEnvio.equals("Envio Nacional ")) {
                 EnvioNacional envioNacional = new EnvioNacional(tipoMercancia, 1, " Juan Perez ", "2023-10-01", "2023-10-05", "Bogotá", "Calle 123", "Cundinamarca");
                 resultadoEnvio = envioNacional.realizarEnvio();
-            } else {
+            } else if  (tipoEnvio.equals("Envio Internacional")) {
                 EnvioInternacional envioInternacional = new EnvioInternacional(tipoMercancia, 2, " Maria Gomez ", "2023-10-01", "2023-10-10", "Madrid", "Calle 456", "España", 100.0, "DHL");
                 resultadoEnvio = envioInternacional.realizarEnvio();
+            }else {
+                EnvioExpress envioExpress = new EnvioExpress(tipoMercancia, 3, " Carlos Lopez ", "2023-10-01", "2023-10-03", "Medellín", "Calle 789", "50.0");
+                resultadoEnvio = envioExpress.realizarEnvio();
             }
             label.setText(resultadoEnvio);
         } else {

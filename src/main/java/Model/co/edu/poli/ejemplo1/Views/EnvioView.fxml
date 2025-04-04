@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="190.0" prefWidth="234.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="Model.co.edu.poli.ejemplo1.Controllers.EnvioController">
+<VBox prefHeight="190.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Model.co.edu.poli.ejemplo1.Controllers.EnvioController">
     <HBox prefHeight="62.0" prefWidth="234.0" spacing="10">
         <Label text="Tipo de Envío:" />
         <ComboBox fx:id="envioComboBox" onAction="#handleEnvioSelection" />
     </HBox>
-    <HBox prefHeight="41.0" prefWidth="234.0" spacing="10">
+    <HBox prefHeight="41.0" prefWidth="356.0" spacing="10">
         <Label text="Tipo de Mercancía:" />
         <ComboBox fx:id="mercanciaComboBox" onAction="#handleMercanciaSelection" />
     </HBox>
-    <Label fx:id="label" prefHeight="43.0" prefWidth="234.0" text="Seleccione una opción de envío y mercancía" />
+    <Label fx:id="label" prefHeight="43.0" prefWidth="745.0" text="Seleccione una opción de envío y mercancía" />
     <Button onAction="#handleRealizarEnvio" text="Realizar Envío" />
 </VBox>

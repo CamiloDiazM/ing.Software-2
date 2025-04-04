@@ -51,7 +51,7 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/ClienteView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Clientes");
-            stage.setScene(new Scene(root, 300, 400));
+            stage.setScene(new Scene(root, 500, 500));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/PagoView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Pagos");
-            stage.setScene(new Scene(root, 297, 167));
+            stage.setScene(new Scene(root, 500, 500));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +80,7 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/EnvioView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Envio");
-            stage.setScene(new Scene(root, 300, 400));
+            stage.setScene(new Scene(root, 500, 500));
             stage.show();
         } catch (Exception e){
             e.printStackTrace();
