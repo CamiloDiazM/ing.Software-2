@@ -8,9 +8,8 @@
       <Button fx:id="Clientebtn" layoutX="41.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Cliente" />
       <Button fx:id="Productobtn" layoutX="41.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Producto" />
       <Button fx:id="Salirbtn" layoutX="41.0" layoutY="221.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Salir" />
-      <Button fx:id="Salirbtn" layoutX="41.0" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Salir" />
       <Button fx:id="btnPago" layoutX="41.0" layoutY="72.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Pago" />
       <Button fx:id="btnEnvio" layoutX="41.0" layoutY="170.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Envio" />
-        <Button fx:id="btnCarrito" layoutX="41.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Carrito" />
+      <Button fx:id="btnCarrito" layoutX="41.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Carrito" />
    </children>
 </AnchorPane>

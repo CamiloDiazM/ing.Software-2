@@ -78,4 +78,28 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    private void mostrarEnvioMenu() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/EnvioView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menu de Envios");
+            stage.setScene(new Scene(root, 297, 167));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mostrarCarrito() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/CarritoView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menu de Carrito");
+            stage.setScene(new Scene(root, 297, 167));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
