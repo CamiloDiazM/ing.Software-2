@@ -22,6 +22,9 @@ public class MainController {
     private Button btnPago;
 
     @FXML
+    private Button btnCarrito;
+
+    @FXML
     private Button btnEnvio;
 
     @FXML
@@ -31,6 +34,7 @@ public class MainController {
         Salirbtn.setOnAction(e -> salir());
         btnPago.setOnAction(e -> mostrarPagoMenu());
         btnEnvio.setOnAction(e -> mostrarEnvioMenu());
+        btnCarrito.setOnAction(e -> mostrarCarrito());
     }
 
     private void mostrarProductoMenu() {
@@ -39,7 +43,7 @@ public class MainController {
                     .load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/ProductoView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Productos");
-            stage.setScene(new Scene(root, 700, 500));
+            stage.setScene(new Scene(root, 300, 500));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +55,7 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/ClienteView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Clientes");
-            stage.setScene(new Scene(root, 500, 500));
+            stage.setScene(new Scene(root, 300, 400));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,21 +72,9 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/PagoView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Pagos");
-            stage.setScene(new Scene(root, 500, 500));
+            stage.setScene(new Scene(root, 297, 167));
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mostrarEnvioMenu() {
-        try{
-            Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/EnvioView.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Menu de Envio");
-            stage.setScene(new Scene(root, 500, 500));
-            stage.show();
-        } catch (Exception e){
             e.printStackTrace();
         }
     }
