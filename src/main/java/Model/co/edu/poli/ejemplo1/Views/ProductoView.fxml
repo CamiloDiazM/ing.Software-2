@@ -13,6 +13,7 @@
         <Button fx:id="btnClonar" layoutX="238.0" layoutY="274.0" mnemonicParsing="false" onAction="#clonarProducto" prefHeight="25.0" prefWidth="180.0" text="Clonar Producto" />
         <Button fx:id="btnSalir" layoutX="238.0" layoutY="324.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="180.0" text="Salir" />
         <Button fx:id="btnConstruirProveedor" layoutX="434.0" layoutY="274.0" mnemonicParsing="false" onAction="#construirProveedorPasoAPaso" prefHeight="25.0" prefWidth="180.0" text="Construir Proveedor (Builder)" />
+        <Button fx:id="btnMostrarCambios" layoutX="71.0" layoutY="324.0" mnemonicParsing="false" onAction="#mostrarCambios" prefHeight="25.0" prefWidth="180.0" text="Composite" />
 
 
     </children>
