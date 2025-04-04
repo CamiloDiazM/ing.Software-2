@@ -1,3 +1,4 @@
+// src/main/java/Model/co/edu/poli/ejemplo1/Controllers/MainController.java
 package Model.co.edu.poli.ejemplo1.Controllers;
 
 import javafx.fxml.FXML;
@@ -22,11 +23,15 @@ public class MainController {
     private Button btnPago;
 
     @FXML
+    private Button btnCarrito;
+
+    @FXML
     private void initialize() {
         Clientebtn.setOnAction(e -> mostrarClienteMenu());
         Productobtn.setOnAction(e -> mostrarProductoMenu());
         Salirbtn.setOnAction(e -> salir());
         btnPago.setOnAction(e -> mostrarPagoMenu());
+        btnCarrito.setOnAction(e -> mostrarCarrito());
     }
 
     private void mostrarProductoMenu() {
@@ -48,6 +53,19 @@ public class MainController {
             Stage stage = new Stage();
             stage.setTitle("Menu de Clientes");
             stage.setScene(new Scene(root, 300, 400));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void mostrarCarrito() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/CarritoView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Carrito de Compras");
+            stage.setScene(new Scene(root, 400, 400));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
