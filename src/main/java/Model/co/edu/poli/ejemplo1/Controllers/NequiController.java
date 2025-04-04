@@ -1,6 +1,6 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Model.NequiAdapter;
+import Model.co.edu.poli.ejemplo1.Model.Adapter.NequiAdapter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

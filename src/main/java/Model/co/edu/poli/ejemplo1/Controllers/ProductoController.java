@@ -1,6 +1,12 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
 import Model.co.edu.poli.ejemplo1.Model.*;
+import Model.co.edu.poli.ejemplo1.Model.Builder.Certificacion;
+import Model.co.edu.poli.ejemplo1.Model.Builder.Evaluacion;
+import Model.co.edu.poli.ejemplo1.Model.Builder.PoliticaDeEntrega;
+import Model.co.edu.poli.ejemplo1.Model.Builder.Proveedor;
+import Model.co.edu.poli.ejemplo1.Model.Composite.Departamento;
+import Model.co.edu.poli.ejemplo1.Model.Composite.Empleado;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAO;
 import Model.co.edu.poli.ejemplo1.Services.ProductoDAOimp;
 import javafx.fxml.FXML;

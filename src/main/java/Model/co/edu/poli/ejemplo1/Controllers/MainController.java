@@ -22,11 +22,15 @@ public class MainController {
     private Button btnPago;
 
     @FXML
+    private Button btnEnvio;
+
+    @FXML
     private void initialize() {
         Clientebtn.setOnAction(e -> mostrarClienteMenu());
         Productobtn.setOnAction(e -> mostrarProductoMenu());
         Salirbtn.setOnAction(e -> salir());
         btnPago.setOnAction(e -> mostrarPagoMenu());
+        btnEnvio.setOnAction(e -> mostrarEnvioMenu());
     }
 
     private void mostrarProductoMenu() {
@@ -35,7 +39,7 @@ public class MainController {
                     .load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/ProductoView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Menu de Productos");
-            stage.setScene(new Scene(root, 300, 500));
+            stage.setScene(new Scene(root, 700, 500));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,6 +71,18 @@ public class MainController {
             stage.setScene(new Scene(root, 297, 167));
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mostrarEnvioMenu() {
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("/Model/co/edu/poli/ejemplo1/Views/EnvioView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menu de Envio");
+            stage.setScene(new Scene(root, 300, 400));
+            stage.show();
+        } catch (Exception e){
             e.printStackTrace();
         }
     }

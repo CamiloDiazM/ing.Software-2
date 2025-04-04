@@ -1,6 +1,6 @@
 package Model.co.edu.poli.ejemplo1.Controllers;
 
-import Model.co.edu.poli.ejemplo1.Model.PaypalAdapter;
+import Model.co.edu.poli.ejemplo1.Model.Adapter.PaypalAdapter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-package Model.co.edu.poli.ejemplo1.Model;
+package Model.co.edu.poli.ejemplo1.Model.Adapter;
 
 public class Nequi {
 
