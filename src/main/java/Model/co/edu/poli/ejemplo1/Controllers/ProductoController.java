@@ -205,6 +205,30 @@ public class ProductoController {
             showAlert("Producto no encontrado.");
         }
     }
+    @FXML
+    public void mostrarCambios() {
+        Empleado emp1 = new Empleado("1", "Juan Perez");
+        Empleado emp2 = new Empleado("2", "Maria Gomez");
+        Empleado emp3 = new Empleado("3", "Carlos Lopez");
+        Empleado emp4 = new Empleado("4", "Ana Martinez");
+
+        Departamento depto1 = new Departamento("Recursos Humanos");
+        depto1.agregarComponente(emp1);
+        depto1.agregarComponente(emp2);
+
+        Departamento depto2 = new Departamento("Tecnología");
+        depto2.agregarComponente(emp3);
+        depto2.agregarComponente(emp4);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Detalles del Departamento 1:\n");
+        sb.append(depto1.mostrarDetalles());
+
+        sb.append("\nDetalles del Departamento 2:\n");
+        sb.append(depto2.mostrarDetalles());
+
+        showAlert(sb.toString());
+    }
 
     @FXML
     public void construirProveedorPasoAPaso() {
