@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="co.edu.poli.observermemento.Controller.ProductoController">
-    <Label text="Gestión de Productos" style="-fx-font-size: 16px;"/>
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="co.edu.poli.observermemento.Controller.ProductoController">
+    <Label style="-fx-font-size: 16px;" text="Gestión de Productos" />
 
     <TableView fx:id="tablaProductos" prefHeight="200" prefWidth="400">
         <columns>
-            <TableColumn text="Nombre" fx:id="columnaNombre"/>
-            <TableColumn text="Descripción" fx:id="columnaDescripcion"/>
-            <TableColumn text="Precio" fx:id="columnaPrecio"/>
+            <TableColumn fx:id="columnaNombre" text="Nombre" />
+            <TableColumn fx:id="columnaDescripcion" text="Descripción" />
+            <TableColumn fx:id="columnaPrecio" text="Precio" />
         </columns>
     </TableView>
 
-    <HBox spacing="10">
-        <Button text="Cambiar Precio" onAction="#cambiarPrecio"/>
-        <Button text="Mostrar Historial" onAction="#mostrarHistorial"/>
-    </HBox>
-
-    <TextArea fx:id="areaHistorial" prefHeight="150" prefWidth="400" editable="false"/>
+    <VBox spacing="10">
+        <HBox spacing="10">
+            <Button onAction="#cambiarPrecio" text="Cambiar Precio" />
+            <Button onAction="#mostrarHistorial" text="Mostrar Historial" />
+            <Button onAction="#mostrarNotificaciones" text="Cliente" />
+            <Button onAction="#restaurarPrecio" text="Restaurar Precio" />
+        </HBox>
+        <TextArea fx:id="areaHistorial" editable="false" prefHeight="200" prefWidth="400" />
+    </VBox>
 </VBox>

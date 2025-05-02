@@ -1,6 +1,6 @@
 package co.edu.poli.observermemento.model;
 
-public class Cliente implements ObservadorProducto{
+public class Cliente implements ObservadorProducto {
 
     private String nombre;
     private String email;
@@ -21,7 +21,6 @@ public class Cliente implements ObservadorProducto{
 
     @Override
     public void actualizar(Producto producto, double precioAnterior, double precioNuevo) {
-        // Solo notificar si el cliente está interesado en este tipo de cambio
         if (precioNuevo < precioAnterior && notificarBajadas) {
             notificarBajadaPrecio(producto, precioAnterior, precioNuevo);
         } else if (precioNuevo > precioAnterior && notificarSubidas) {

@@ -1,6 +1,8 @@
 package co.edu.poli.observermemento.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Producto {
 
@@ -8,17 +10,29 @@ public class Producto {
     private String descripcion;
     private double precioActual;
     private long ultimaActualizacion;
-    private GestorProductos gestor;
+    private List<ObservadorProducto> observadores;
+    private GestorProductos gestorProductos;
 
     public Producto(String nombre, String descripcion, double precioInicial) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioActual = precioInicial;
         this.ultimaActualizacion = System.currentTimeMillis();
+        this.observadores = new ArrayList<>();
+    }
+    public void setGestorProductos(GestorProductos gestorProductos) {
+        this.gestorProductos = gestorProductos;
     }
 
-    public void setGestorProductos(GestorProductos gestor) {
-        this.gestor = gestor;
+    public void agregarObservador(ObservadorProducto observador) {
+        observadores.add(observador);
+    }
+    public List<ObservadorProducto> getObservadores() {
+        return observadores;
+    }
+
+    public void eliminarObservador(ObservadorProducto observador) {
+        observadores.remove(observador);
     }
 
     public void setPrecio(double nuevoPrecio) {
@@ -27,13 +41,11 @@ public class Producto {
         this.ultimaActualizacion = System.currentTimeMillis();
 
         // Notificar a los observadores sobre el cambio de precio
-        if (gestor != null) {
-            notificarObservadores(precioAnterior, nuevoPrecio);
-        }
+        notificarObservadores(precioAnterior, nuevoPrecio);
     }
 
     private void notificarObservadores(double precioAnterior, double precioNuevo) {
-        for (ObservadorProducto observador : gestor.getObservadores(this.nombre)) {
+        for (ObservadorProducto observador : observadores) {
             observador.actualizar(this, precioAnterior, precioNuevo);
         }
     }

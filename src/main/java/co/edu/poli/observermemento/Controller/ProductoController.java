@@ -1,11 +1,15 @@
 package co.edu.poli.observermemento.Controller;
 
+import co.edu.poli.observermemento.model.Cliente;
 import co.edu.poli.observermemento.model.GestorProductos;
+import co.edu.poli.observermemento.model.ObservadorProducto;
 import co.edu.poli.observermemento.model.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.List;
 
 public class ProductoController {
 
@@ -36,6 +40,17 @@ public class ProductoController {
         gestorProductos.registrarProducto(producto2);
         gestorProductos.registrarProducto(producto3);
 
+        // Crear y registrar clientes
+        Cliente cliente1 = new Cliente("Juan Pérez", "juan.perez@example.com");
+        Cliente cliente2 = new Cliente("María López", "maria.lopez@example.com");
+        Cliente cliente3 = new Cliente("Carlos Gómez", "carlos.gomez@example.com");
+
+        // Suscribir clientes a productos
+        producto1.agregarObservador(cliente1);
+        producto1.agregarObservador(cliente2);
+        producto2.agregarObservador(cliente2);
+        producto3.agregarObservador(cliente3);
+
         // Cargar productos en la tabla
         productos = FXCollections.observableArrayList(gestorProductos.getProductos());
         columnaNombre.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombre()));
@@ -43,6 +58,22 @@ public class ProductoController {
         columnaPrecio.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPrecio()));
 
         tablaProductos.setItems(productos);
+    }
+    @FXML
+    public void mostrarNotificaciones() {
+        StringBuilder notificaciones = new StringBuilder("Notificaciones de Clientes:\n");
+        for (Producto producto : gestorProductos.getProductos()) {
+            for (ObservadorProducto observador : producto.getObservadores()) {
+                if (observador instanceof Cliente) {
+                    Cliente cliente = (Cliente) observador;
+                    notificaciones.append("Cliente: ").append(cliente.getNombre())
+                            .append(" - Producto: ").append(producto.getNombre())
+                            .append("\n");
+                }
+            }
+        }
+        // Actualiza el contenido del TextArea en lugar de imprimir en consola
+        areaHistorial.setText(notificaciones.toString());
     }
 
     @FXML
@@ -59,10 +90,29 @@ public class ProductoController {
                     double nuevoPrecio = Double.parseDouble(precio);
                     gestorProductos.cambiarPrecioProducto(productoSeleccionado.getNombre(), nuevoPrecio);
                     tablaProductos.refresh();
+                    mostrarNotificaciones();
                 } catch (NumberFormatException e) {
                     mostrarAlerta("Error", "El precio ingresado no es válido.");
                 }
             });
+        } else {
+            mostrarAlerta("Advertencia", "Seleccione un producto.");
+        }
+    }
+    @FXML
+    public void restaurarPrecio() {
+        Producto productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+        if (productoSeleccionado != null) {
+            List<Producto.ProductoMemento> historialProducto = gestorProductos.getHistorialPrecios()
+                    .getHistorialProducto(productoSeleccionado.getNombre());
+            if (historialProducto != null && !historialProducto.isEmpty()) {
+                int indiceUltimo = historialProducto.size() - 1; // Último índice del historial
+                gestorProductos.restaurarPrecioProducto(productoSeleccionado.getNombre(), indiceUltimo);
+                tablaProductos.refresh();
+                mostrarNotificaciones();
+            } else {
+                mostrarAlerta("Advertencia", "No hay historial para restaurar.");
+            }
         } else {
             mostrarAlerta("Advertencia", "Seleccione un producto.");
         }
@@ -72,8 +122,15 @@ public class ProductoController {
     public void mostrarHistorial() {
         Producto productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
         if (productoSeleccionado != null) {
-            areaHistorial.clear();
-            gestorProductos.mostrarHistorialProducto(productoSeleccionado.getNombre());
+            StringBuilder historial = new StringBuilder("Historial de precios para: ")
+                    .append(productoSeleccionado.getNombre()).append("\n");
+            List<Producto.ProductoMemento> historialProducto = gestorProductos.getHistorialPrecios()
+                    .getHistorialProducto(productoSeleccionado.getNombre());
+            for (int i = 0; i < historialProducto.size(); i++) {
+                Producto.ProductoMemento memento = historialProducto.get(i);
+                historial.append("[").append(i).append("] ").append(memento).append("\n");
+            }
+            areaHistorial.setText(historial.toString());
         } else {
             mostrarAlerta("Advertencia", "Seleccione un producto.");
         }
