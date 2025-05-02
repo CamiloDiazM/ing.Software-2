@@ -1,0 +1,110 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classBackgroundColor LightBlue
+skinparam classArrowColor Black
+skinparam classBorderColor DarkBlue
+skinparam noteBackgroundColor LightYellow
+skinparam noteBorderColor DarkOrange
+
+title Diagrama de Clases - Patrones Memento y Observer
+
+package "Patrón Memento" {
+  class Producto {
+    -String nombre
+    -String descripcion
+    -double precioActual
+    -long ultimaActualizacion
+    +Producto(String nombre, String descripcion, double precioInicial)
+    +void setPrecio(double nuevoPrecio)
+    +double getPrecio()
+    +String getNombre()
+    +String getDescripcion()
+    +long getUltimaActualizacion()
+    +ProductoMemento crearMemento()
+    +void restaurarDesdeMemento(ProductoMemento memento)
+    -void notificarObservadores()
+  }
+
+  class ProductoMemento {
+    -double precio
+    -long timestamp
+    +ProductoMemento(double precio)
+    +double getPrecio()
+    +long getTimestamp()
+    +String toString()
+  }
+
+  class HistorialPrecios {
+    -Map<String, List<ProductoMemento>> historialPorProducto
+    +void guardarMemento(String nombreProducto, ProductoMemento memento)
+    +List<ProductoMemento> getHistorialProducto(String nombreProducto)
+    +ProductoMemento getUltimoMemento(String nombreProducto)
+    +ProductoMemento getMementoPorFecha(String nombreProducto, long timestamp)
+  }
+}
+
+package "Patrón Observer" {
+  interface ObservadorProducto {
+    +void actualizar(Producto producto, double precioAnterior, double precioNuevo)
+  }
+
+  class Cliente implements ObservadorProducto {
+    -String nombre
+    -String email
+    +Cliente(String nombre, String email)
+    +void actualizar(Producto producto, double precioAnterior, double precioNuevo)
+    +String getNombre()
+    +String getEmail()
+  }
+
+  class SistemaNoficaciones implements ObservadorProducto {
+    +void actualizar(Producto producto, double precioAnterior, double precioNuevo)
+    +void enviarNotificacionSubidaPrecio(Producto producto, double precioAnterior, double precioNuevo)
+    +void enviarNotificacionBajadaPrecio(Producto producto, double precioAnterior, double precioNuevo)
+  }
+
+  class GestorProductos {
+    -List<Producto> productos
+    -Map<String, List<ObservadorProducto>> observadoresPorProducto
+    +void registrarProducto(Producto producto)
+    +void eliminarProducto(Producto producto)
+    +void suscribirObservador(String nombreProducto, ObservadorProducto observador)
+    +void cancelarSuscripcion(String nombreProducto, ObservadorProducto observador)
+    +List<ObservadorProducto> getObservadores(String nombreProducto)
+    +List<Producto> getProductos()
+  }
+}
+
+' Relaciones
+Producto --> ProductoMemento : crea >
+HistorialPrecios o--> ProductoMemento : almacena >
+HistorialPrecios --> Producto : restaura estado >
+
+Producto --> "0..*" ObservadorProducto : notifica >
+GestorProductos o--> "0..*" Producto : gestiona >
+GestorProductos o--> "0..*" ObservadorProducto : gestiona suscripciones >
+
+note right of Producto
+  La clase Producto actúa como "Originator"
+  en el patrón Memento y como "Subject"
+  en el patrón Observer
+end note
+
+note right of ProductoMemento
+  Almacena el estado de un Producto
+  en un momento específico (precio y timestamp)
+end note
+
+note right of HistorialPrecios
+  Actúa como "Caretaker" en el patrón Memento,
+  gestionando y almacenando los estados
+  históricos de los productos
+end note
+
+note right of ObservadorProducto
+  Define la interfaz para los objetos que
+  deben ser notificados de cambios en los precios
+end note
+
+@enduml

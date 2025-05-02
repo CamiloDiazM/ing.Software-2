@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.poli.observermemento.Controller.ProductoController">
+    <Label text="Gestión de Productos" style="-fx-font-size: 16px;"/>
+
+    <TableView fx:id="tablaProductos" prefHeight="200" prefWidth="400">
+        <columns>
+            <TableColumn text="Nombre" fx:id="columnaNombre"/>
+            <TableColumn text="Descripción" fx:id="columnaDescripcion"/>
+            <TableColumn text="Precio" fx:id="columnaPrecio"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Cambiar Precio" onAction="#cambiarPrecio"/>
+        <Button text="Mostrar Historial" onAction="#mostrarHistorial"/>
+    </HBox>
+
+    <TextArea fx:id="areaHistorial" prefHeight="150" prefWidth="400" editable="false"/>
+</VBox>
