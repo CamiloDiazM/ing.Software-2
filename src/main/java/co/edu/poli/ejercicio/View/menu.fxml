@@ -17,9 +17,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.ejercicio.Controller.MenuController">
+<BorderPane prefHeight="720.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.ejercicio.Controller.MenuController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -60,12 +59,12 @@
                         <Label text="Nombre Producto:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <TextField fx:id="nombreField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Label text="Precio Unitario:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                        <TextField fx:id="precioField" GridPane.columnIndex="3" GridPane.rowIndex="0" promptText="Ej: 15000.00" />
+                        <TextField fx:id="precioField" promptText="Ej: 15000.00" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
                         <Label text="Cantidad a Agregar:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <TextField fx:id="cantidadField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Ej: 1" />
+                        <TextField fx:id="cantidadField" promptText="Ej: 1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Stock Inicial Prod.:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField fx:id="stockInicialField" GridPane.columnIndex="3" GridPane.rowIndex="1" promptText="Ej: 10" />
+                        <TextField fx:id="stockInicialField" promptText="Ej: 10" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
                         <Button maxWidth="Infinity" onAction="#agregarProductoAlPedidoAction" text="Agregar Producto al Pedido" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                     </children>
@@ -90,7 +89,6 @@
                     <children>
                         <Label text="Estrategia de Cálculo Total:" />
                         <ComboBox fx:id="estrategiaCalculoComboBox" prefWidth="180.0" />
-                        <Button onAction="#calcularTotalPedidoAction" text="Actualizar Total" />
                         <Label fx:id="totalPedidoLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Total: $0.00">
                             <HBox.margin>
                                 <Insets left="20.0" />
@@ -104,8 +102,8 @@
 
                 <HBox alignment="CENTER" spacing="20.0">
                     <children>
-                        <Button onAction="#reducirStockDelPedidoAction" prefHeight="40.0" style="-fx-background-color: #FFDAB9; -fx-font-size: 13px;" text="Confirmar Compra y Reducir Stock" wrapText="true" textAlignment="CENTER" />
-                        <Button onAction="#procesarPedidoAction" prefHeight="40.0" style="-fx-font-weight: bold; -fx-background-color: #90EE90; -fx-font-size: 13px;" text="Procesar Pedido (Factura, etc.) y Limpiar Carrito" wrapText="true" textAlignment="CENTER" />
+                        <Button onAction="#reducirStockDelPedidoAction" prefHeight="40.0" style="-fx-background-color: #FFDAB9; -fx-font-size: 13px;" text="Confirmar Compra y Reducir Stock" textAlignment="CENTER" wrapText="true" />
+                        <Button onAction="#procesarPedidoAction" prefHeight="40.0" style="-fx-font-weight: bold; -fx-background-color: #90EE90; -fx-font-size: 13px;" text="Procesar Pedido (Factura, etc.) y Limpiar Carrito" textAlignment="CENTER" wrapText="true" />
                     </children>
                 </HBox>
 
