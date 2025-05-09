@@ -60,4 +60,8 @@ public class GestorPedido {
     public Pedido getPedido() {
         return pedido;
     }
+
+    public Handler getHandlerInicial() {
+        return handlerInicial;
+    }
 }
