@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.ejercicio.Controller.MenuController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Archivo">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Salir Dummy (Acerca de)" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ayuda">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Acerca de..." />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <VBox spacing="10.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Gestión de Pedidos con Patrones de Diseño" />
+
+                <GridPane hgap="10.0" vgap="8.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Nombre Producto:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="nombreField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Precio Unitario:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="precioField" GridPane.columnIndex="3" GridPane.rowIndex="0" promptText="Ej: 15000.00" />
+
+                        <Label text="Cantidad a Agregar:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="cantidadField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Ej: 1" />
+                        <Label text="Stock Inicial Prod.:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="stockInicialField" GridPane.columnIndex="3" GridPane.rowIndex="1" promptText="Ej: 10" />
+
+                        <Button maxWidth="Infinity" onAction="#agregarProductoAlPedidoAction" text="Agregar Producto al Pedido" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                    </children>
+                </GridPane>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Productos en el Pedido Actual (Carrito):" />
+                        <Button fx:id="eliminarProductoButton" mnemonicParsing="false" onAction="#eliminarProductoSeleccionadoAction" style="-fx-background-color: #FFB6C1;" text="Eliminar Seleccionado" />
+                    </children>
+                </HBox>
+                <TableView fx:id="pedidoTable" prefHeight="180.0">
+                    <columns>
+                        <TableColumn fx:id="nombreProductoPedidoColumn" prefWidth="250.0" text="Producto" />
+                        <TableColumn fx:id="precioProductoPedidoColumn" prefWidth="120.0" text="Precio U." />
+                        <TableColumn fx:id="cantidadProductoPedidoColumn" prefWidth="100.0" text="Cantidad Pedida" />
+                        <TableColumn fx:id="stockDisponibleProductoColumn" prefWidth="120.0" text="Stock Catálogo" />
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label text="Estrategia de Cálculo Total:" />
+                        <ComboBox fx:id="estrategiaCalculoComboBox" prefWidth="180.0" />
+                        <Button onAction="#calcularTotalPedidoAction" text="Actualizar Total" />
+                        <Label fx:id="totalPedidoLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Total: $0.00">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                    </VBox.margin>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="20.0">
+                    <children>
+                        <Button onAction="#reducirStockDelPedidoAction" prefHeight="40.0" style="-fx-background-color: #FFDAB9; -fx-font-size: 13px;" text="Confirmar Compra y Reducir Stock" wrapText="true" textAlignment="CENTER" />
+                        <Button onAction="#procesarPedidoAction" prefHeight="40.0" style="-fx-font-weight: bold; -fx-background-color: #90EE90; -fx-font-size: 13px;" text="Procesar Pedido (Factura, etc.) y Limpiar Carrito" wrapText="true" textAlignment="CENTER" />
+                    </children>
+                </HBox>
+
+                <Label style="-fx-font-weight: bold;" text="Log de Operaciones:" />
+                <TextArea fx:id="logTextArea" editable="false" prefHeight="180.0" wrapText="true" />
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
