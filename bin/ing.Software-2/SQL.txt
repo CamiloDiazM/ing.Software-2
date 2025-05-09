@@ -1,0 +1,47 @@
+CREATE DATABASE dao;
+
+USE dao;
+
+CREATE TABLE Clientes (
+    id VARCHAR(36) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Productos (
+    id VARCHAR(36) PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('Electrico', 'Alimenticio')),
+    descripcion VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Electricos (
+    id_producto VARCHAR(36) PRIMARY KEY,
+    voltaje VARCHAR(50) NOT NULL, 
+    FOREIGN KEY (id_producto) REFERENCES Productos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Alimenticios (
+    id_producto VARCHAR(36) PRIMARY KEY,
+    calorias VARCHAR(50) NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES Productos(id) ON DELETE CASCADE
+);	
+
+CREATE TABLE Pedidos (
+    numPedido VARCHAR(36) PRIMARY KEY,
+    fecha DATE NOT NULL,
+    cliente_id VARCHAR(36),
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(id) ON DELETE SET NULL
+);
+
+CREATE TABLE Pedido_Productos (
+    pedido_id VARCHAR(36),
+    producto_id VARCHAR(36),
+    PRIMARY KEY (pedido_id, producto_id),
+    FOREIGN KEY (pedido_id) REFERENCES Pedidos(numPedido) ON DELETE CASCADE,
+    FOREIGN KEY (producto_id) REFERENCES Productos(id) ON DELETE CASCADE
+);
+
+
+select * from Productos;
+select * from Clientes;
+select * from Pedidos;
+select * from Pedido_Productos;
