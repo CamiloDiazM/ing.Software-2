@@ -13,8 +13,6 @@ public class VisitorImpl implements Visitante {
     @Override
     public String visitar(Pedido pedido) {
         double total = 0;
-        System.out.println("Pedido del cliente: " + pedido.getCliente().getNombre());
-        System.out.println("Productos en el pedido:");
         for (Producto producto : pedido.getProductos()) {
             System.out.println("- " + producto.getNombre() + ", Precio: $" + producto.getPrecio());
             total += producto.getPrecio();

@@ -3,6 +3,7 @@ package co.edu.poli.ejercicio.Controller;
 import java.util.List;
 
 import co.edu.poli.ejercicio.Model.Cliente;
+import co.edu.poli.ejercicio.Model.Mediator.MediadorConcreto;
 import co.edu.poli.ejercicio.Model.Pedido;
 import co.edu.poli.ejercicio.Model.Producto;
 import co.edu.poli.ejercicio.Model.State.Cancelado;
@@ -44,6 +45,17 @@ public class StateController {
     @FXML
     private Label txtTotal;
 
+    @FXML
+    private TextField txtNombreCliente;
+
+    @FXML
+    private TextField txtIdCliente;
+
+    @FXML
+    private ChoiceBox<String> clientesBox;
+
+
+
     private List<Producto> productos = List.of(
             new Producto("Laptop", 1200000),
             new Producto("Mouse", 25000),
@@ -52,6 +64,7 @@ public class StateController {
 
     private EstadoPedido estadoPedido;
     private Pedido pedido;
+    private MediadorConcreto mediador = new MediadorConcreto();
 
     @FXML
     public void initialize() {
@@ -74,6 +87,7 @@ public class StateController {
         btnNuevoPedido.setOnAction(e -> onNuevoPedidoClick());
     }
 
+    @FXML
     private void CancelarClick() {
         if (estadoPedido.getNombreEstado().equals("Pidiendo") ||
                 estadoPedido.getNombreEstado().equals("Empezando Pedido")) {
@@ -85,42 +99,45 @@ public class StateController {
         }
     }
 
-    private Object onAgregarClick() {
+    @FXML
+    private void onAgregarClick() {
         String productoSeleccionado = productosBox.getValue();
-        double precio = productos.stream()
-                .filter(p -> p.getNombre().equals(productoSeleccionado))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"))
-                .getPrecio();
-
-        if (estadoPedido.getNombreEstado().equals("Pidiendo") ||
-                estadoPedido.getNombreEstado().equals("Empezando Pedido")) {
-            estadoPedido.agregarProducto(pedido, new Producto(productoSeleccionado, precio));
-            estadoPedido = new Pidiendo();
-            pedido.setEstado(estadoPedido);
-            mssState.setText(estadoPedido.getNombreEstado());
-            actualizarCarrito();
-        } else {
-            mssState.setText("No se puede agregar productos en este estado: " + estadoPedido.getNombreEstado());
+        if (productoSeleccionado == null || productoSeleccionado.equals("Seleccione un producto")) {
+            mssState.setText("Seleccione un producto válido.");
+            return;
         }
 
-        return null;
+        Producto producto = productos.stream()
+                .filter(p -> p.getNombre().equals(productoSeleccionado))
+                .findFirst()
+                .orElse(null);
 
+        if (producto != null) {
+            if (estadoPedido.getNombreEstado().equals("Pidiendo") || estadoPedido.getNombreEstado().equals("Empezando Pedido")) {
+                estadoPedido.agregarProducto(pedido, producto);
+                estadoPedido = new Pidiendo();
+                pedido.setEstado(estadoPedido);
+                mssState.setText(estadoPedido.getNombreEstado());
+                actualizarCarrito();
+            } else {
+                mssState.setText("No se puede agregar productos en este estado: " + estadoPedido.getNombreEstado());
+            }
+        }
     }
 
-    private Object onPagarClick() {
+    @FXML
+    private void onPagarClick() {
         if (estadoPedido.getNombreEstado().equals("Pidiendo")) {
             estadoPedido = new Pagado();
             estadoPedido.pagar(pedido);
             mssState.setText(estadoPedido.getNombreEstado());
-            txtTotal.setText("Total :" + pedido.aceptar(new VisitorImpl()) + " Pagado!");
+            txtTotal.setText("Total: " + pedido.aceptar(new VisitorImpl()) + " Pagado!");
         } else {
             mssState.setText("No se puede pagar el pedido en este estado: " + estadoPedido.getNombreEstado());
         }
-
-        return null;
     }
 
+    @FXML
     private void onNuevoPedidoClick() {
         estadoPedido = new EmpezandoPedido();
         pedido.setEstado(estadoPedido);
@@ -134,9 +151,61 @@ public class StateController {
         mssCarrito.clear();
         mssCarrito.appendText("Productos en el carrito:\n");
 
+        VisitorImpl visitor = new VisitorImpl();
         for (Producto producto : pedido.getProductos()) {
-            mssCarrito.appendText(producto.getNombre() + "\n");
+            mssCarrito.appendText(producto.aceptar(visitor) + "\n");
         }
-        txtTotal.setText("Total :" + pedido.aceptar(new VisitorImpl()));
+
+        txtTotal.setText("Total: " + pedido.aceptar(visitor));
+    }
+
+    @FXML
+    private void onEliminarProductoClick() {
+        String productoSeleccionado = productosBox.getValue();
+        if (productoSeleccionado != null && !productoSeleccionado.equals("Seleccione un producto")) {
+            String mensaje = mediador.eliminarProducto(productoSeleccionado);
+            mssState.setText(mensaje);
+            actualizarProductos();
+        } else {
+            mssState.setText("Seleccione un producto válido para eliminar.");
+        }
+    }
+
+    @FXML
+    private void onCrearProductoClick() {
+        String mensaje = mediador.crearProducto("Tablet", 800000);
+        mssState.setText(mensaje);
+        actualizarProductos();
+    }
+
+    private void actualizarProductos() {
+        productosBox.getItems().clear();
+        productosBox.getItems().addAll(
+                mediador.obtenerProductos().stream().map(Producto::getNombre).toList()
+        );
+    }
+
+    @FXML
+    private void onCrearClienteClick() {
+        String nombre = txtNombreCliente.getText();
+        String id = txtIdCliente.getText();
+
+        if (nombre.isEmpty() || id.isEmpty()) {
+            mssState.setText("Por favor, complete todos los campos para crear un cliente.");
+            return;
+        }
+
+        String mensaje = mediador.crearCliente(nombre, id);
+        mssState.setText(mensaje);
+        actualizarClientes();
+        txtNombreCliente.clear();
+        txtIdCliente.clear();
+    }
+
+    private void actualizarClientes() {
+        clientesBox.getItems().clear();
+        clientesBox.getItems().addAll(
+                mediador.obtenerClientes().stream().map(Cliente::getNombre).toList()
+        );
     }
 }

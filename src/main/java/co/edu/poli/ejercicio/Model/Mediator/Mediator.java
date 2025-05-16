@@ -1,18 +1,20 @@
 package co.edu.poli.ejercicio.Model.Mediator;
 
+import java.util.List;
+
 import co.edu.poli.ejercicio.Model.Cliente;
 import co.edu.poli.ejercicio.Model.Pedido;
 import co.edu.poli.ejercicio.Model.Producto;
-import co.edu.poli.ejercicio.Model.Visitor.ClaseVisitable;
 
 public interface Mediator {
-    String crearPedido(Cliente cliente);
 
-    String agregarProductoAlPedido(Cliente cliente, Producto producto);
+    String crearProducto(String nombre, double precio);
 
-    void eliminarProductoDelPedido(Cliente cliente, Producto producto);
+    String eliminarProducto(String nombre);
 
-    void aplicarDescuento(Cliente cliente, double descuento);
+    String crearCliente(String nombre, String id);
 
-    Pedido obtenerPedido(Cliente cliente);
+    List<Cliente> obtenerClientes();
+
+    List<Producto> obtenerProductos();
 }

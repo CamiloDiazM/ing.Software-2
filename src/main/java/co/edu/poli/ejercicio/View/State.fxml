@@ -4,20 +4,51 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.ejercicio.Controller.StateController">
-   <children>
-      <Label layoutX="241.0" layoutY="25.0" text="Pedido" />
-      <ChoiceBox fx:id="productosBox" layoutX="39.0" layoutY="82.0" prefWidth="150.0" />
-      <Label layoutX="69.0" layoutY="54.0" text="Elija un producto" />
-      <Button fx:id="btnAgregar" layoutX="422.0" layoutY="82.0" mnemonicParsing="false" text="Agregar al carrito" />
-      <Label layoutX="453.0" layoutY="139.0" prefHeight="17.0" prefWidth="48.0" text="carrito: " />
-      <Button fx:id="btnPagar" layoutX="39.0" layoutY="184.0" mnemonicParsing="false" text="Pagar" />
-      <Button fx:id="btnCancelar" layoutX="198.0" layoutY="184.0" mnemonicParsing="false" text="Cancelar" />
-      <TextArea fx:id="mssState" layoutX="39.0" layoutY="241.0" prefHeight="73.0" prefWidth="226.0" />
-      <TextArea fx:id="mssCarrito" layoutX="412.0" layoutY="184.0" prefHeight="200.0" prefWidth="129.0" />
-      <Button fx:id="btnNuevoPedido" layoutX="106.0" layoutY="358.0" mnemonicParsing="false" text="Nuevo pedido" />
-      <Label fx:id="txtTotal" layoutX="413.0" layoutY="393.0" prefHeight="52.0" prefWidth="129.0" text="Total: " />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.poli.ejercicio.Controller.StateController">
+   <Label layoutX="350.0" layoutY="25.0" text="Gestión de Pedidos"/>
+
+   <!-- Sección de Productos -->
+   <Label layoutX="50.0" layoutY="60.0" text="Productos Disponibles"/>
+   <ChoiceBox fx:id="productosBox" layoutX="50.0" layoutY="90.0" prefWidth="200.0"/>
+   <Button fx:id="btnAgregar" layoutX="270.0" layoutY="90.0" mnemonicParsing="false" text="Agregar al carrito"
+           onAction="#onAgregarClick"/>
+   <Button fx:id="btnEliminarProducto" layoutX="400.0" layoutY="90.0" mnemonicParsing="false" text="Eliminar Producto"
+           onAction="#onEliminarProductoClick"/>
+
+   <Label layoutX="50.0" layoutY="130.0" text="Crear Producto"/>
+   <TextField fx:id="txtNombreProducto" layoutX="50.0" layoutY="160.0" promptText="Nombre del producto"/>
+   <TextField fx:id="txtPrecioProducto" layoutX="200.0" layoutY="160.0" promptText="Precio del producto"/>
+   <Button fx:id="btnCrearProducto" layoutX="400.0" layoutY="160.0" mnemonicParsing="false" text="Crear Producto"
+           onAction="#onCrearProductoClick"/>
+
+   <!-- Sección de Clientes -->
+   <Label layoutX="50.0" layoutY="210.0" text="Clientes Registrados"/>
+   <ChoiceBox fx:id="clientesBox" layoutX="50.0" layoutY="240.0" prefWidth="200.0"/>
+
+   <Label layoutX="50.0" layoutY="280.0" text="Crear Cliente"/>
+   <TextField fx:id="txtNombreCliente" layoutX="50.0" layoutY="310.0" promptText="Nombre del cliente"/>
+   <TextField fx:id="txtIdCliente" layoutX="200.0" layoutY="310.0" promptText="ID del cliente"/>
+   <Button fx:id="btnCrearCliente" layoutX="400.0" layoutY="310.0" mnemonicParsing="false" text="Crear Cliente"
+           onAction="#onCrearClienteClick"/>
+
+   <!-- Sección de Carrito -->
+   <Label layoutX="600.0" layoutY="60.0" text="Carrito"/>
+   <TextArea fx:id="mssCarrito" layoutX="600.0" layoutY="90.0" prefHeight="200.0" prefWidth="150.0" editable="false"/>
+
+   <!-- Botones de Pedido -->
+   <Button fx:id="btnPagar" layoutX="50.0" layoutY="400.0" mnemonicParsing="false" text="Pagar"
+           onAction="#onPagarClick"/>
+   <Button fx:id="btnCancelar" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" text="Cancelar"
+           onAction="#CancelarClick"/>
+   <Button fx:id="btnNuevoPedido" layoutX="250.0" layoutY="400.0" mnemonicParsing="false" text="Nuevo Pedido"
+           onAction="#onNuevoPedidoClick"/>
+
+   <!-- Mensajes -->
+   <TextArea fx:id="mssState" layoutX="50.0" layoutY="450.0" prefHeight="100.0" prefWidth="300.0" editable="false"/>
+   <Label fx:id="txtTotal" layoutX="600.0" layoutY="300.0" prefHeight="50.0" prefWidth="150.0" text="Total: "/>
 </AnchorPane>

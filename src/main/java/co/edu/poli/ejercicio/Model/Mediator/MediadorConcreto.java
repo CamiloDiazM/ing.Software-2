@@ -1,62 +1,59 @@
 package co.edu.poli.ejercicio.Model.Mediator;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import co.edu.poli.ejercicio.Model.Cliente;
+import co.edu.poli.ejercicio.Model.Mediator.Mediator;
 import co.edu.poli.ejercicio.Model.Pedido;
 import co.edu.poli.ejercicio.Model.Producto;
-import co.edu.poli.ejercicio.Model.Visitor.ClaseVisitable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MediadorConcreto implements Mediator {
-    private Map<Cliente, Pedido> pedidos = new HashMap<>();
+    private List<Cliente> clientes = new ArrayList<>();
+    private List<Producto> productosDisponibles = new ArrayList<>();
 
-    public String crearPedido(Cliente cliente) {
-        Pedido pedido = new Pedido(cliente);
-        pedidos.put(cliente, pedido);
-        return "Pedido creado para: " + cliente.getNombre();
-    }
+    public MediadorConcreto() {
 
-    public String agregarProductoAlPedido(Cliente cliente, Producto producto) {
-        Pedido pedido = pedidos.get(cliente);
-        if (pedido != null) {
-            pedido.getProductos().add(producto);
-
-        }
-        return "Producto agregado al pedido de " + cliente.getNombre() + ": " + producto.getNombre();
-    }
-
-    public void eliminarProductoDelPedido(Cliente cliente, Producto producto) {
-        Pedido pedido = pedidos.get(cliente);
-        if (pedido != null) {
-            pedido.getProductos().remove(producto);
-
-        }
-    }
-
-    public void aplicarDescuento(Cliente cliente, double descuento) {
-        Pedido pedido = pedidos.get(cliente);
-        if (pedido != null) {
-            double total = 0;
-            for (Producto producto : pedido.getProductos()) {
-                total += producto.getPrecio();
-            }
-            double totalConDescuento = total - (total * descuento);
-            System.out.println("Total con descuento: $" + totalConDescuento);
-        }
-    }
-
-    public Map<Cliente, Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Map<Cliente, Pedido> pedidos) {
-        this.pedidos = pedidos;
+        productosDisponibles.add(new Producto("Laptop", 1200000));
+        productosDisponibles.add(new Producto("Mouse", 25000));
+        productosDisponibles.add(new Producto("Teclado", 50000));
+        productosDisponibles.add(new Producto("Monitor", 300000));
     }
 
     @Override
-    public Pedido obtenerPedido(Cliente cliente) {
-        return pedidos.get(cliente);
+    public String crearProducto(String nombre, double precio) {
+        Producto producto = new Producto(nombre, precio);
+        productosDisponibles.add(producto);
+        return "Producto creado: " + nombre;
     }
 
+    @Override
+    public String eliminarProducto(String nombre) {
+        Producto producto = productosDisponibles.stream()
+                .filter(p -> p.getNombre().equals(nombre))
+                .findFirst()
+                .orElse(null);
+        if (producto != null) {
+            productosDisponibles.remove(producto);
+            return "Producto eliminado: " + nombre;
+        }
+        return "Producto no encontrado.";
+    }
+
+    @Override
+    public String crearCliente(String nombre, String id) {
+        Cliente cliente = new Cliente(nombre, id);
+        clientes.add(cliente);
+        return "Cliente creado: " + nombre;
+    }
+
+    @Override
+    public List<Cliente> obtenerClientes() {
+        return clientes;
+    }
+
+    @Override
+    public List<Producto> obtenerProductos() {
+        return productosDisponibles;
+    }
 }
