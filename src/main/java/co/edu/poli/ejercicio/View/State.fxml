@@ -3,52 +3,74 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.poli.ejercicio.Controller.StateController">
-   <Label layoutX="350.0" layoutY="25.0" text="Gestión de Pedidos"/>
+<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.ejercicio.Controller.StateController">
+   <children>
+      <VBox layoutX="14.0" layoutY="14.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <children>
+            <Label text="Gestión de Pedidos y Catálogo">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
 
-   <!-- Sección de Productos -->
-   <Label layoutX="50.0" layoutY="60.0" text="Productos Disponibles"/>
-   <ChoiceBox fx:id="productosBox" layoutX="50.0" layoutY="90.0" prefWidth="200.0"/>
-   <Button fx:id="btnAgregar" layoutX="270.0" layoutY="90.0" mnemonicParsing="false" text="Agregar al carrito"
-           onAction="#onAgregarClick"/>
-   <Button fx:id="btnEliminarProducto" layoutX="400.0" layoutY="90.0" mnemonicParsing="false" text="Eliminar Producto"
-           onAction="#onEliminarProductoClick"/>
+            <Separator prefWidth="200.0" />
+            <Label text="Gestión de Clientes:" />
+            <HBox spacing="10.0">
+               <children>
+                  <TextField fx:id="txtIdCliente" promptText="ID Cliente" />
+                  <TextField fx:id="txtNombreCliente" promptText="Nombre Cliente" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnCrearCliente" mnemonicParsing="false" onAction="#onCrearClienteClick" text="Crear Cliente" />
+               </children>
+            </HBox>
+            <ChoiceBox fx:id="clientesBox" prefWidth="300.0" />
 
-   <Label layoutX="50.0" layoutY="130.0" text="Crear Producto"/>
-   <TextField fx:id="txtNombreProducto" layoutX="50.0" layoutY="160.0" promptText="Nombre del producto"/>
-   <TextField fx:id="txtPrecioProducto" layoutX="200.0" layoutY="160.0" promptText="Precio del producto"/>
-   <Button fx:id="btnCrearProducto" layoutX="400.0" layoutY="160.0" mnemonicParsing="false" text="Crear Producto"
-           onAction="#onCrearProductoClick"/>
+            <Separator prefWidth="200.0" />
+            <Label text="Gestión de Catálogo de Productos:" />
+            <HBox spacing="10.0">
+               <children>
+                  <TextField fx:id="txtNuevoNombreProducto" promptText="Nombre Producto Cat." HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="txtNuevoPrecioProducto" promptText="Precio Producto Cat." />
+                  <Button fx:id="btnCrearProductoCatalogo" mnemonicParsing="false" onAction="#onCrearProductoCatalogoClick" text="Crear Prod. Cat." />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <Label text="Productos del Catálogo:" VBox.vgrow="ALWAYS" />
+               <Button fx:id="btnEliminarProductoCatalogo" mnemonicParsing="false" onAction="#onEliminarProductoCatalogoClick" text="Eliminar Prod. Cat. Seleccionado" />
+            </HBox>
+            <ChoiceBox fx:id="productosBox" prefWidth="400.0" />
 
-   <!-- Sección de Clientes -->
-   <Label layoutX="50.0" layoutY="210.0" text="Clientes Registrados"/>
-   <ChoiceBox fx:id="clientesBox" layoutX="50.0" layoutY="240.0" prefWidth="200.0"/>
+            <Separator prefWidth="200.0" />
+            <Label text="Operaciones del Pedido:" />
+            <HBox spacing="10.0">
+               <children>
+                  <Button fx:id="btnNuevoPedido" mnemonicParsing="false" onAction="#onNuevoPedidoClick" text="Nuevo Pedido" />
+                  <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#onAgregarClick" text="Agregar al Pedido" />
+                  <Button fx:id="btnEliminarDelPedido" mnemonicParsing="false" onAction="#onEliminarDelPedidoClick" text="Eliminar del Pedido" />
+                  <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#onPagarClick" text="Pagar Pedido" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onCancelarPedidoClick" text="Cancelar Pedido" />
+               </children>
+            </HBox>
 
-   <Label layoutX="50.0" layoutY="280.0" text="Crear Cliente"/>
-   <TextField fx:id="txtNombreCliente" layoutX="50.0" layoutY="310.0" promptText="Nombre del cliente"/>
-   <TextField fx:id="txtIdCliente" layoutX="200.0" layoutY="310.0" promptText="ID del cliente"/>
-   <Button fx:id="btnCrearCliente" layoutX="400.0" layoutY="310.0" mnemonicParsing="false" text="Crear Cliente"
-           onAction="#onCrearClienteClick"/>
+            <Separator prefWidth="200.0" />
+            <Label text="Estado del Sistema/Pedido:" />
+            <TextArea fx:id="mssState" prefHeight="60.0" wrapText="true" />
 
-   <!-- Sección de Carrito -->
-   <Label layoutX="600.0" layoutY="60.0" text="Carrito"/>
-   <TextArea fx:id="mssCarrito" layoutX="600.0" layoutY="90.0" prefHeight="200.0" prefWidth="150.0" editable="false"/>
-
-   <!-- Botones de Pedido -->
-   <Button fx:id="btnPagar" layoutX="50.0" layoutY="400.0" mnemonicParsing="false" text="Pagar"
-           onAction="#onPagarClick"/>
-   <Button fx:id="btnCancelar" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" text="Cancelar"
-           onAction="#CancelarClick"/>
-   <Button fx:id="btnNuevoPedido" layoutX="250.0" layoutY="400.0" mnemonicParsing="false" text="Nuevo Pedido"
-           onAction="#onNuevoPedidoClick"/>
-
-   <!-- Mensajes -->
-   <TextArea fx:id="mssState" layoutX="50.0" layoutY="450.0" prefHeight="100.0" prefWidth="300.0" editable="false"/>
-   <Label fx:id="txtTotal" layoutX="600.0" layoutY="300.0" prefHeight="50.0" prefWidth="150.0" text="Total: "/>
+            <Label text="Carrito de Compras:" />
+            <TextArea fx:id="mssCarrito" prefHeight="150.0" wrapText="true" VBox.vgrow="ALWAYS" />
+            <Label fx:id="txtTotal" text="Total: $0.00">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

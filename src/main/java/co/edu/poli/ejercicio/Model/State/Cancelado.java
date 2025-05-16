@@ -6,23 +6,27 @@ import co.edu.poli.ejercicio.Model.Producto;
 public class Cancelado implements EstadoPedido {
 
     @Override
-    public void agregarProducto(Pedido pedido, Producto producto) {
-        pedido.setEstado(new EmpezandoPedido());
+    public String agregarProducto(Pedido pedido, Producto producto) {
+        // Si se quiere reabrir un pedido cancelado al agregar un producto:
+        // pedido.getProductos().clear(); // Opcional: limpiar productos anteriores
+        // pedido.getProductos().add(producto);
+        // pedido.setEstado(new Pidiendo());
+        // return "Pedido reabierto. Producto '" + producto.getNombre() + "' agregado.";
+        return "No se pueden agregar productos a un pedido cancelado. Inicie un nuevo pedido.";
     }
 
     @Override
-    public void cancelar(Pedido pedido) {
-        System.out.println("El pedido ya está cancelado.");
+    public String cancelar(Pedido pedido) {
+        return "El pedido ya está cancelado.";
     }
 
     @Override
-    public void pagar(Pedido pedido) {
-        System.out.println("No se puede pagar un pedido cancelado.");
+    public String pagar(Pedido pedido) {
+        return "No se puede pagar un pedido cancelado.";
     }
 
     @Override
     public String getNombreEstado() {
         return "Cancelado";
     }
-
 }

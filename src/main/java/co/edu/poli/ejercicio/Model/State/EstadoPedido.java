@@ -5,12 +5,12 @@ import co.edu.poli.ejercicio.Model.Producto;
 
 public interface EstadoPedido {
 
-    void agregarProducto(Pedido pedido, Producto producto);
+    String agregarProducto(Pedido pedido, Producto producto);
 
-    void pagar(Pedido pedido);
+    String pagar(Pedido pedido);
 
-    void cancelar(Pedido pedido);
+    String cancelar(Pedido pedido);
 
-    String getNombreEstado();
+    String getNombreEstado(); // Este puede seguir igual, ya que solo devuelve el nombre.
 
 }

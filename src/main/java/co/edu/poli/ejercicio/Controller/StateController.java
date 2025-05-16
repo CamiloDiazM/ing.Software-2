@@ -1,238 +1,236 @@
 package co.edu.poli.ejercicio.Controller;
 
-import java.util.List;
-
 import co.edu.poli.ejercicio.Model.Cliente;
 import co.edu.poli.ejercicio.Model.Mediator.MediadorConcreto;
 import co.edu.poli.ejercicio.Model.Mediator.Mediator;
 import co.edu.poli.ejercicio.Model.Pedido;
 import co.edu.poli.ejercicio.Model.Producto;
-import co.edu.poli.ejercicio.Model.State.Cancelado;
-import co.edu.poli.ejercicio.Model.State.EmpezandoPedido;
-import co.edu.poli.ejercicio.Model.State.EstadoPedido;
-import co.edu.poli.ejercicio.Model.State.Pagado;
-import co.edu.poli.ejercicio.Model.State.Pidiendo;
 import co.edu.poli.ejercicio.Model.Visitor.VisitorImpl;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 public class StateController {
 
-    @FXML
-    private Button btnAgregar;
+    @FXML private Button btnAgregar;
+    @FXML private Button btnCancelar;
+    @FXML private Button btnNuevoPedido;
+    @FXML private Button btnPagar;
+    @FXML private Button btnCrearCliente;
+    @FXML private Button btnCrearProductoCatalogo;
+    @FXML private Button btnEliminarProductoCatalogo;
+    @FXML private Button btnEliminarDelPedido;
 
-    @FXML
-    private Button btnCancelar;
+    @FXML private TextArea mssCarrito;
+    @FXML private TextArea mssState;
+    @FXML private ChoiceBox<Producto> productosBox;
+    @FXML private Label txtTotal;
+    @FXML private TextField txtNombreCliente;
+    @FXML private TextField txtIdCliente;
+    @FXML private ChoiceBox<Cliente> clientesBox;
 
-    @FXML
-    private Button btnNuevoPedido;
+    @FXML private TextField txtNuevoNombreProducto;
+    @FXML private TextField txtNuevoPrecioProducto;
 
-    @FXML
-    private Button btnPagar;
-
-    @FXML
-    private TextArea mssCarrito;
-
-    @FXML
-    private TextArea mssState;
-
-    @FXML
-    private ChoiceBox<String> productosBox;
-
-    @FXML
-    private Label txtTotal;
-
-    @FXML
-    private TextField txtPrecioProducto;
-
-    @FXML
-    private TextField txtNombreProducto;
-
-    @FXML
-    private TextField txtNombreCliente;
-
-    @FXML
-    private TextField txtIdCliente;
-
-    @FXML
-    private ChoiceBox<String> clientesBox;
-
-    private Mediator mediador = new MediadorConcreto();
+    private Mediator mediador;
+    private VisitorImpl visitor;
 
     @FXML
     public void initialize() {
-        // Agregar productos predefinidos al mediador
-        mediador.agregarProducto(new Producto("Laptop", 1200000));
-        mediador.agregarProducto(new Producto("Mouse", 25000));
-        mediador.agregarProducto(new Producto("Teclado", 50000));
-        mediador.agregarProducto(new Producto("Monitor", 300000));
+        mediador = new MediadorConcreto();
+        visitor = new VisitorImpl();
 
-        // Inicializar ChoiceBox con productos del mediador
-        productosBox.getItems().addAll(
-                mediador.getProductos().stream().map(Producto::getNombre).toList());
-        productosBox.setValue("Seleccione un producto");
+        productosBox.setConverter(new StringConverter<Producto>() {
+            @Override public String toString(Producto producto) { return producto == null ? null : producto.getNombre() + " ($" + producto.getPrecio() + ")"; }
+            @Override public Producto fromString(String string) { return null; }
+        });
 
-        // Inicializar pedido y estado
-        pedido = mediador.crearPedido(new Cliente("Dana", "5"));
-        estadoPedido = new EmpezandoPedido();
-        mssState.setText(estadoPedido.getNombreEstado());
+        clientesBox.setConverter(new StringConverter<Cliente>() {
+            @Override public String toString(Cliente cliente) { return cliente == null ? null : cliente.getNombre() + " (ID: " + cliente.getId() + ")"; }
+            @Override public Cliente fromString(String string) { return null; }
+        });
 
-        // Configurar acciones y propiedades de los elementos de la interfaz
-        agregarAcciones();
+        actualizarProductosCatalogoChoiceBox();
+        actualizarClientesChoiceBox();
+        productosBox.setValue(null);
+        clientesBox.setValue(null);
+
+        mssState.setText("Sistema listo. Seleccione un cliente e inicie un pedido.");
+        actualizarVistaPedido();
         mssCarrito.setEditable(false);
         mssState.setEditable(false);
     }
-    private EstadoPedido estadoPedido;
-    private Pedido pedido;
 
-    private void agregarAcciones() {
-        btnAgregar.setOnAction(e -> onAgregarClick());
-        btnCancelar.setOnAction(e -> CancelarClick());
-        btnPagar.setOnAction(e -> onPagarClick());
-        btnNuevoPedido.setOnAction(e -> onNuevoPedidoClick());
-    }
     @FXML
-    private void onCrearProductoClick() {
-        String nombreProducto = txtNombreProducto.getText();
-        String precioProductoStr = txtPrecioProducto.getText();
+    private void onNuevoPedidoClick() {
+        Cliente clienteSeleccionado = clientesBox.getValue();
+        if (clienteSeleccionado == null) {
+            mssState.setText("Por favor, seleccione un cliente para el nuevo pedido.");
+            return;
+        }
+        Pedido nuevoPedido = mediador.iniciarNuevoPedido(clienteSeleccionado.getId());
+        if (nuevoPedido != null) {
+            mssState.setText("Nuevo pedido iniciado para " + clienteSeleccionado.getNombre() + ". Estado: " + nuevoPedido.getEstado().getNombreEstado());
+        } else {
+            mssState.setText("No se pudo iniciar el pedido. Verifique el cliente.");
+        }
+        actualizarVistaPedido();
+    }
 
-        if (nombreProducto.isEmpty() || precioProductoStr.isEmpty()) {
-            mssState.setText("Por favor, complete todos los campos para crear un producto.");
+    @FXML
+    private void onAgregarClick() {
+        Producto productoSeleccionado = productosBox.getValue();
+        if (productoSeleccionado == null) {
+            mssState.setText("Seleccione un producto válido del catálogo.");
+            return;
+        }
+        String mensajeDelEstado = mediador.agregarProductoAPedidoActual(productoSeleccionado.getNombre());
+        mssState.setText(mensajeDelEstado);
+        actualizarVistaPedido();
+    }
+
+    @FXML
+    private void onEliminarDelPedidoClick() {
+        Producto productoSeleccionado = productosBox.getValue();
+        if (productoSeleccionado == null) {
+            mssState.setText("Seleccione un producto del catálogo para intentar eliminarlo del pedido.");
+            return;
+        }
+        String mensajeDelEstado = mediador.eliminarProductoDePedidoActual(productoSeleccionado.getNombre());
+        mssState.setText(mensajeDelEstado);
+        actualizarVistaPedido();
+    }
+
+    @FXML
+    private void onCancelarPedidoClick() {
+        String mensajeDelEstado = mediador.cancelarPedidoActual();
+        mssState.setText(mensajeDelEstado);
+        actualizarVistaPedido();
+    }
+
+    @FXML
+    private void onPagarClick() {
+        Pedido pedidoAPagar = mediador.obtenerPedidoActual();
+        if (pedidoAPagar == null) {
+            mssState.setText("No hay pedido activo para pagar.");
+            actualizarVistaPedido();
             return;
         }
 
-        try {
-            double precioProducto = Double.parseDouble(precioProductoStr);
-            Producto nuevoProducto = new Producto(nombreProducto, precioProducto);
-            mediador.agregarProducto(nuevoProducto);
+        String mensajeDelEstado = pedidoAPagar.getEstado().pagar(pedidoAPagar);
+        mssState.setText(mensajeDelEstado);
+        actualizarVistaPedido();
+    }
 
-            // Actualizar ChoiceBox de productos
-            productosBox.getItems().add(nuevoProducto.getNombre());
-            mssState.setText("Producto creado exitosamente.");
-            txtNombreProducto.clear();
-            txtPrecioProducto.clear();
-        } catch (NumberFormatException e) {
-            mssState.setText("El precio debe ser un número válido.");
+    private void actualizarVistaPedido() {
+        Pedido pedido = mediador.obtenerPedidoActual();
+        mssCarrito.clear();
+        txtTotal.setText("Total: $0.00");
+
+        if (pedido != null) {
+            mssCarrito.appendText("Cliente: " + pedido.getCliente().getNombre() + " (ID: " + pedido.getCliente().getId() + ")\n");
+            mssCarrito.appendText("Estado Actual del Pedido: " + pedido.getEstado().getNombreEstado() + "\n");
+            mssCarrito.appendText("---- Productos en el carrito ----\n");
+            if (pedido.getProductos().isEmpty()) {
+                mssCarrito.appendText("(Carrito vacío)\n");
+            } else {
+                for (Producto p : pedido.getProductos()) {
+                    mssCarrito.appendText(p.aceptar(visitor) + "\n");
+                }
+            }
+            String totalTexto = "Total: " + pedido.aceptar(visitor);
+            if ("Pagado".equals(pedido.getEstado().getNombreEstado())) {
+                totalTexto += " ¡Pagado!";
+            }
+            txtTotal.setText(totalTexto);
+        } else {
+            mssCarrito.setText("No hay pedido activo.");
         }
     }
 
     @FXML
     private void onCrearClienteClick() {
-        String nombreCliente = txtNombreCliente.getText();
-        String idCliente = txtIdCliente.getText();
-
-        if (nombreCliente.isEmpty() || idCliente.isEmpty()) {
-            mssState.setText("Por favor, complete todos los campos para crear un cliente.");
+        String nombre = txtNombreCliente.getText();
+        String id = txtIdCliente.getText();
+        if (nombre.isEmpty() || id.isEmpty()) {
+            mssState.setText("Campos incompletos para crear cliente.");
             return;
         }
-
-        Cliente nuevoCliente = new Cliente(nombreCliente, idCliente);
-        mediador.getClientes().add(nuevoCliente);
-
-        // Actualizar ChoiceBox de clientes
-        clientesBox.getItems().add(nuevoCliente.getNombre());
-        mssState.setText("Cliente creado exitosamente.");
-        txtNombreCliente.clear();
-        txtIdCliente.clear();
+        String mensaje = mediador.crearCliente(nombre, id);
+        mssState.setText(mensaje);
+        if (!mensaje.startsWith("Error:")) {
+            actualizarClientesChoiceBox();
+            txtNombreCliente.clear();
+            txtIdCliente.clear();
+        }
     }
 
-    @FXML
-    private void onEliminarProductoClick() {
-        String productoSeleccionado = productosBox.getValue();
-
-        if (productoSeleccionado == null || productoSeleccionado.equals("Seleccione un producto")) {
-            mssState.setText("Seleccione un producto válido para eliminar.");
-            return;
-        }
-
-        Producto productoAEliminar = pedido.getProductos().stream()
-                .filter(p -> p.getNombre().equals(productoSeleccionado))
-                .findFirst()
-                .orElse(null);
-
-        if (productoAEliminar != null) {
-            pedido.getProductos().remove(productoAEliminar);
-            actualizarCarrito();
-            mssState.setText("Producto eliminado del carrito.");
+    private void actualizarClientesChoiceBox() {
+        Cliente clienteSeleccionado = clientesBox.getValue();
+        clientesBox.getItems().clear();
+        clientesBox.getItems().addAll(mediador.obtenerClientes());
+        if (clienteSeleccionado != null && clientesBox.getItems().contains(clienteSeleccionado)) {
+            clientesBox.setValue(clienteSeleccionado);
         } else {
-            mssState.setText("El producto no está en el carrito.");
+            clientesBox.setValue(null);
         }
     }
 
     @FXML
-    private void CancelarClick() {
-        if (estadoPedido.getNombreEstado().equals("Pidiendo") ||
-                estadoPedido.getNombreEstado().equals("Empezando Pedido")) {
-            estadoPedido = new Cancelado();
-            pedido.setEstado(estadoPedido);
-            mssState.setText(estadoPedido.getNombreEstado());
-        } else {
-            mssState.setText("No se puede cancelar el pedido en este estado: " + estadoPedido.getNombreEstado());
-        }
-    }
-
-
-    @FXML
-    private void onAgregarClick() {
-        String productoSeleccionado = productosBox.getValue();
-        if (productoSeleccionado == null || productoSeleccionado.equals("Seleccione un producto")) {
-            mssState.setText("Seleccione un producto válido.");
+    private void onCrearProductoCatalogoClick() {
+        String nombre = txtNuevoNombreProducto.getText();
+        String precioStr = txtNuevoPrecioProducto.getText();
+        if (nombre.isEmpty() || precioStr.isEmpty()) {
+            mssState.setText("Ingrese nombre y precio para el nuevo producto.");
             return;
         }
-
-        Producto producto = mediador.getProductos().stream()
-                .filter(p -> p.getNombre().equals(productoSeleccionado))
-                .findFirst()
-                .orElse(null);
-
-        if (producto != null) {
-            if (estadoPedido.getNombreEstado().equals("Pidiendo") || estadoPedido.getNombreEstado().equals("Empezando Pedido")) {
-                estadoPedido.agregarProducto(pedido, producto);
-                estadoPedido = new Pidiendo();
-                pedido.setEstado(estadoPedido);
-                mssState.setText(estadoPedido.getNombreEstado());
-                actualizarCarrito();
-            } else {
-                mssState.setText("No se puede agregar productos en este estado: " + estadoPedido.getNombreEstado());
+        try {
+            double precio = Double.parseDouble(precioStr);
+            String mensaje = mediador.crearProductoCatalogo(nombre, precio);
+            mssState.setText(mensaje);
+            if (!mensaje.startsWith("Error:")) {
+                actualizarProductosCatalogoChoiceBox();
+                txtNuevoNombreProducto.clear();
+                txtNuevoPrecioProducto.clear();
             }
+        } catch (NumberFormatException e) {
+            mssState.setText("Error: El precio debe ser un número.");
         }
     }
 
     @FXML
-    private void onPagarClick() {
-        if (estadoPedido.getNombreEstado().equals("Pidiendo")) {
-            estadoPedido = new Pagado();
-            estadoPedido.pagar(pedido);
-            mssState.setText(estadoPedido.getNombreEstado());
-            txtTotal.setText("Total: " + pedido.aceptar(new VisitorImpl()) + " Pagado!");
+    private void onEliminarProductoCatalogoClick() {
+        Producto productoSeleccionado = productosBox.getValue();
+        if (productoSeleccionado != null) {
+            String mensaje = mediador.eliminarProductoCatalogo(productoSeleccionado.getNombre());
+            mssState.setText(mensaje);
+            actualizarProductosCatalogoChoiceBox();
+            actualizarVistaPedido();
         } else {
-            mssState.setText("No se puede pagar el pedido en este estado: " + estadoPedido.getNombreEstado());
+            mssState.setText("Seleccione un producto del catálogo para eliminar.");
         }
     }
 
-    @FXML
-    private void onNuevoPedidoClick() {
-        estadoPedido = new EmpezandoPedido();
-        pedido.setEstado(estadoPedido);
-        mssState.setText(estadoPedido.getNombreEstado());
-        pedido.getProductos().clear();
-        mssCarrito.clear();
-        productosBox.setValue("Seleccione un producto");
-    }
+    private void actualizarProductosCatalogoChoiceBox() {
+        Producto productoSeleccionadoPrevio = productosBox.getValue();
+        productosBox.getItems().clear();
+        productosBox.getItems().addAll(mediador.obtenerProductosCatalogo());
 
-    private void actualizarCarrito() {
-        mssCarrito.clear();
-        mssCarrito.appendText("Productos en el carrito:\n");
-
-        VisitorImpl visitor = new VisitorImpl();
-        for (Producto producto : pedido.getProductos()) {
-            mssCarrito.appendText(producto.aceptar(visitor) + "\n");
+        if (productoSeleccionadoPrevio != null) {
+            productosBox.getItems().stream()
+                    .filter(p -> p.getNombre().equals(productoSeleccionadoPrevio.getNombre()))
+                    .findFirst()
+                    .ifPresent(productosBox::setValue);
         }
-
-        txtTotal.setText("Total: " + pedido.aceptar(visitor));
+        if (productosBox.getValue() == null && !productosBox.getItems().isEmpty()) {
+            // Opcional: no seleccionar nada o el primero.
+        } else if (productosBox.getItems().isEmpty()){
+            productosBox.setValue(null);
+        }
     }
 }
