@@ -1,17 +1,17 @@
 package co.edu.poli.ejercicio.Model;
 
-public class Producto {
+import co.edu.poli.ejercicio.Model.Visitor.ClaseVisitable;
+import co.edu.poli.ejercicio.Model.Visitor.Visitante;
+
+public class Producto implements ClaseVisitable {
 
     private String nombre;
     private double precio;
-    private int stock;
-    private String idProducto;
 
-    public Producto(String nombre, double precio, int stock, String idProducto) {
+    public Producto(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
-        this.stock = stock;
-        this.idProducto = idProducto;
+
     }
 
     public String getNombre() {
@@ -30,20 +30,9 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
+    @Override
+    public String aceptar(Visitante visitor) {
+        return visitor.visitar(this);
     }
 
 }

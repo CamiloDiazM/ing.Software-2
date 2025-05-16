@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.ejercicio.Controller.StateController">
+   <children>
+      <Label layoutX="241.0" layoutY="25.0" text="Pedido" />
+      <ChoiceBox fx:id="productosBox" layoutX="39.0" layoutY="82.0" prefWidth="150.0" />
+      <Label layoutX="69.0" layoutY="54.0" text="Elija un producto" />
+      <Button fx:id="btnAgregar" layoutX="422.0" layoutY="82.0" mnemonicParsing="false" text="Agregar al carrito" />
+      <Label layoutX="453.0" layoutY="139.0" prefHeight="17.0" prefWidth="48.0" text="carrito: " />
+      <Button fx:id="btnPagar" layoutX="39.0" layoutY="184.0" mnemonicParsing="false" text="Pagar" />
+      <Button fx:id="btnCancelar" layoutX="198.0" layoutY="184.0" mnemonicParsing="false" text="Cancelar" />
+      <TextArea fx:id="mssState" layoutX="39.0" layoutY="241.0" prefHeight="73.0" prefWidth="226.0" />
+      <TextArea fx:id="mssCarrito" layoutX="412.0" layoutY="184.0" prefHeight="200.0" prefWidth="129.0" />
+      <Button fx:id="btnNuevoPedido" layoutX="106.0" layoutY="358.0" mnemonicParsing="false" text="Nuevo pedido" />
+      <Label fx:id="txtTotal" layoutX="413.0" layoutY="393.0" prefHeight="52.0" prefWidth="129.0" text="Total: " />
+   </children>
+</AnchorPane>

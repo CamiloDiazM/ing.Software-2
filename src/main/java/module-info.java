@@ -4,11 +4,10 @@ module mi.proyecto {
     requires java.sql;
     requires javafx.graphics;
 
-    opens co.edu.poli.ejercicio.Controller to javafx.fxml;
-
-
-    exports co.edu.poli.ejercicio.Controller;
     exports co.edu.poli.ejercicio.View;
+    exports co.edu.poli.ejercicio.Controller;
+
     opens co.edu.poli.ejercicio.View to javafx.fxml;
+    opens co.edu.poli.ejercicio.Controller to javafx.fxml;
 
 }
